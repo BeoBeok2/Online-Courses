@@ -1,0 +1,299 @@
+.main{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.container{
+    margin: 0 auto;
+    width: 1230px;
+}
+#primary{
+
+
+    float: left;
+    margin: 0;
+    padding: 0 0 0;
+    position: relative;
+    width: 100%;
+    
+}
+.feedback{
+    display: flex;
+    background: #fff;
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,.1);
+    color: #737373;
+    margin: 10px 0 0 0;
+    align-items: center;
+}
+.icon{
+    left: 5px;
+    margin-right: 20px;
+    position: relative;
+    padding: 0px 0.5em; 
+}
+    .feedback p{
+        font-size: 20px;
+        margin: 7px;
+    }
+
+.formregister{
+    display: inline-flex;
+    margin-top: 20px;
+}
+    .formregister h2{
+        margin: 1em 0;
+        padding: 0;
+        font-family: Poppins;
+        font-size: 40px;
+    }
+    .formregister label{
+        display: block;
+        font-weight: 600;
+        margin: 15px 0 5px;
+        width: auto;
+    }
+.layoutwrap{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+}
+
+
+.account{
+    min-width: 25em;
+    flex: 1;
+    padding-right: 3em;
+}
+.passwordwrap{
+    width: auto;
+}
+    .account label{
+        font-weight: 400;
+        letter-spacing: .2px;
+        font-family: Roboto;
+        font-size: 25px;
+    }
+    .account input:not(.small){
+        height: 40px;
+        padding: 10px;
+    }
+    /*
+    .account input:checked{
+        border-color: #0070f3 ;
+        outline: none ;
+    }*/
+    .account input[type=text]{
+        border-radius: 20px 7px 7px 7px;
+        border-width: 1px;
+        background-color: #fafafa;
+        border: 1px solid #d6d6d6;
+        font: inherit;
+        
+    }
+    .account input[type=email]{
+        border-radius: 20px 7px 7px 7px;
+        border-width: 1px;
+        background-color: #fafafa;
+        border: 1px solid #d6d6d6;
+        font: inherit;
+        
+    }
+    .account input[type=password]{
+        border-radius: 20px 7px 7px 7px;
+        border-width: 1px;
+        background-color: #fafafa;
+        border: 1px solid #d6d6d6;
+        font: inherit;
+        
+    }
+    /*
+    .account input:required{
+        border-color: #ff0000 ;
+    }*/
+    
+    .account input[type='text']{
+        appearance: none;
+        font-size: 30px;
+        color: #7d7d7d;
+        width: 94%;
+        margin-bottom: 30px;
+    }
+    .account input[type='email']{
+        appearance: none;
+        font-size: 30px;
+        color: #7d7d7d;
+        width: 94%;
+        margin-bottom: 30px;
+    }
+    .account input[type='password']{
+        appearance: none;
+        font-size: 30px;
+        color: #7d7d7d;
+        width: 94%;
+        margin-bottom: 30px;
+    }
+
+
+    .passwordwrap #pass1{
+        display: inline-block;
+        margin-bottom: inherit;
+        width: 9em;
+        margin-right: 10px;
+    }
+    .passwordwrap .button_hide_pass{
+        margin-top: 5px;
+        background: white;
+        border-color: initial;
+    }
+#text_red_500{
+    font-size: 25px;
+    color: #333;
+    display: block;
+    background: #e65454;
+    padding: 18px;
+    margin-top: 20px;
+    width: 6em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 20px;
+}
+#text_orange_500{
+    font-size: 25px;
+    color: #333;
+    display: block;
+    background: #e5853b;
+    padding: 18px;
+    margin-top: 20px;
+    width: 6em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 20px;
+}
+#text_yellow_500{
+    font-size: 25px;
+    color: #333;
+    display: block;
+    background: #f0f032;
+    padding: 18px;
+    margin-top: 20px;
+    width: 6em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 20px;
+}
+#text_green_500{
+    font-size: 25px;
+    color: #333;
+    display: block;
+    background: #66d66e;
+    padding: 18px;
+    margin-top: 20px;
+    width: 6em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 20px;
+}
+#text_blue_500{
+    font-size: 25px;
+    color: #333;
+    display: block;
+    background: #15cce9;
+    padding: 18px;
+    margin-top: 20px;
+    width: 6em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 20px;
+}
+
+#checkpass2{
+    font-size: 20px;
+    color: 333;
+}
+.des_hint{
+    font-size: 21px;
+    color: #737373;
+    margin: 15px 0;
+    background: #fafafa;
+}
+.profile{
+    flex: 2;
+    padding-left: 0;
+    min-width: 48.8em;
+    height: 640px;
+    align-self: flex-start;
+}
+    .profile label{
+        font-weight: 400;
+        letter-spacing: .2px;
+        font-family: Roboto;
+        font-size: 25px;
+    }
+    .profile input:not(.small){
+        height: 40px;
+        padding: 10px;
+    }
+    /*
+    .profile input:checked{
+        border-color: #0070f3 ;
+        outline: none ;
+    }*/
+    .profile input[type=text]{
+        border-radius: 20px 7px 7px 7px;
+        border-width: 1px;
+        background-color: #fafafa;
+        border: 1px solid #d6d6d6;
+        font: inherit;
+        
+    }
+    /*
+    .profile input:required{
+        border-color: #ff0000 ;
+    }*/
+    
+    .profile input[type='text']{
+        appearance: none;
+        font-size: 30px;
+        color: #7d7d7d;
+        width: 97.4%;
+        margin-bottom: 0px;
+    }
+.field{
+    font-size: 21px;
+    color: #737373;
+    margin: 0;
+    padding: 10px 0;
+}
+.field_level{
+    margin-left: 15px;
+    color: #737373;
+    font-weight: bold;
+}
+.submit{
+    clear: both;
+    padding: 15px 0 0;
+}
+#submit{
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 21px;
+    padding: 20px 45px 20px;
+    border-radius: 30px 5px 5px;
+    margin: 10px 34px 0px 0px;
+    border: none;
+    transition: all 0.5s ease;
+}
+    #submit:hover{
+        border-radius: 5px;
+    }
+
+
+@media (max-width: 1230px) {
+    .container{
+        margin: 0 auto;
+        width: 800px;
+    }
+}
