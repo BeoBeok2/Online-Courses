@@ -1,3 +1,4 @@
+
 .page_login{
     background-image: url("../public/images/pagelogin.jpeg");
     background-size: cover;
@@ -103,6 +104,9 @@
     }
     .dtlms_login_form_holder input{
         vertical-align: middle;
+    }
+    .dtlms_login_form_holder input:required[true]{
+        border-color: red;
     }
     .dtlms_login_form_holder input[type='text']{
         color: #7d7d7d;

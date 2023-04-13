@@ -29,6 +29,7 @@ export default function Login (){
         console.log(`Password: ${password}`);
         router.push('http://localhost:3000/components/register/register');
       };
+      
     return(
         <>
             <div className={Styles.page_login}>
@@ -53,7 +54,8 @@ export default function Login (){
                                         name='log' id='user_login' 
                                         autoComplete='username' 
                                         className='input' 
-                                        value-size={20}/>
+                                        value-size={20}
+                                        required/>
                                 </p>
                                 <p className={Styles.login_password}>
                                     <label htmlFor="user_pass">Password</label>
@@ -66,7 +68,8 @@ export default function Login (){
                                         onChange={(e) => setPassword(e.target.value)}
                                         autoComplete='password' 
                                         className='input' 
-                                        value-size={20}/>
+                                        value-size={20}
+                                        required/>
                                 </p>
                                 <p className={Styles.login_remember}>
                                     <label htmlFor="rememberMe">

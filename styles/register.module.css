@@ -213,6 +213,7 @@
     font-size: 20px;
     color: 333;
 }
+
 .des_hint{
     font-size: 21px;
     color: #737373;
@@ -295,5 +296,55 @@
     .container{
         margin: 0 auto;
         width: 800px;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    #text_red_500{
+        font-size: 20px;
+
+    }
+    #text_orange_500{
+        font-size: 20px;
+
+    }
+    #text_yellow_500{
+        font-size: 20px;
+
+    }
+    #text_green_500{
+        font-size: 20px;
+
+    }
+    #text_blue_500{
+        font-size: 20px;
+
+    }
+    #checkpass2{
+        font-size: 18px;
+    }
+}
+@media only screen and (max-width: 767px){
+    #text_red_500{
+        font-size: 15px;
+
+    }
+    #text_orange_500{
+        font-size: 15px;
+
+    }
+    #text_yellow_500{
+        font-size: 15px;
+
+    }
+    #text_green_500{
+        font-size: 15px;
+
+    }
+    #text_blue_500{
+        font-size: 15px;
+
+    }
+    #checkpass2{
+        font-size: 15px;
     }
 }
