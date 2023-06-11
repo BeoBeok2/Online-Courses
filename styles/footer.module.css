@@ -1,0 +1,312 @@
+.footer_header {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  width: 100%;
+  height: 50px;
+  background-color: #eee;
+  display: contents;
+}
+
+.footer_header * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", "sans-serif";
+  }
+  
+  /* ================= header ======================== */
+  .footer_header header {
+    background: #222222 !important;
+  }
+  #container_header{
+    background-color: #030303;
+    padding: 0 150px;
+  }
+  /* ====  above-nav ===== */
+  .header .container .above_nav {
+    display: flex;
+    justify-content: space-around;
+    color: rgb(135, 133, 133);
+    border-bottom: 0.1px solid rgb(94, 91, 91);
+  }
+  .social_medial {
+    display: contents;
+  }
+  .social_medial li {
+    display: inline-block;
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+    padding: 0 20px 0 0;
+    cursor: pointer;
+  }
+  .social_medial li:hover i {
+    color: #00eda4;
+  }
+  .logo {
+    padding-left: 0;
+  }
+  .account {
+    display: inline-flex;
+    cursor: pointer;
+    margin-top: 15px;
+    float: right;
+  }
+  .account a:hover {
+    color: #00eda4;
+  }
+  .account .login,
+  .register {
+    font-family: "roboto";
+    padding-right: 20px;
+    font-size: 14px;
+  }
+  .login a{
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  .register a{
+    color: white;
+    text-decoration: none;
+  }
+  .above_nav{
+    color: white;
+  }
+  .above_nav::before {
+    font-size: 1px;
+    width: 100px;
+    height: 100px;
+    color: rgb(240, 248, 255);
+  }
+  /* ==== under nav ==== */
+  .under_nav {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    margin-top: 15px;
+  }
+  .list_nav {
+    display: flex;
+  }
+  .list_nav li a {
+    display: flex;
+    padding: 5px 5px 5px 0px;
+    font-family: "Poppins", sans-serif;
+  }
+  .list_nav .sub_menu li a {
+    width: 100px;
+  }
+  .list_nav a {
+    display: flex;
+    font-size: 16px;
+    color: aliceblue;
+    text-decoration: none;
+    /* background-color: orange; */
+    margin: 0 10px;
+    padding-bottom: 100px;
+  }
+  .list_nav li:hover > a {
+    color: #00eda4;
+    cursor: pointer;
+  }
+  .list_nav > li {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .list_nav li {
+    position: relative;
+  }
+  .list_nav li:hover > .sub_menu {
+    display: block;
+  }
+  .sub_menu {
+    width: 150px;
+    position: absolute;
+    background-color: #222222;
+    top: 32px;
+    left: 0px;
+    width: 140px;
+    display: none;
+    border-radius: 10px;
+    padding: 0;
+    list-style-type: none;
+
+  }
+  .sub_menu li a {
+    display: inline-block;
+    padding: 20px;
+  }
+  
+  .sub_menu a {
+    width: 100%;
+    display: inline-block;
+    padding: 20px 15px;
+    border-bottom: 1px solid rgb(94, 91, 91);
+    font-size: 14px;
+  }
+  .sub_menu .sub_menu {
+    left: 100%;
+    top: 0;
+    /* display: none; */
+  }
+#Portfolio{
+  border:none;
+}
+.space{
+    padding: 20px 0;
+}
+.spaceline{
+    padding: 40px 0;
+    background: white;
+}
+.first_foot {
+    background-color: #00eda4;
+  }
+  
+  .first_foot .container {
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .title_left {
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 900;
+    font-family: "Poppins";
+  }
+  .title_left .Special {
+    border-bottom: 4.5px solid rgb(252, 246, 246);
+  }
+  
+  .title_left .Special:hover {
+    border-bottom: 4.5px solid rgb(68, 79, 231);
+    transition: all 0.3s linear 0s;
+  }
+  
+  .container .title_right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container .title_right .social_media {
+    display: flex;
+  }
+  .title_right .content_left {
+    margin-bottom: 0px;
+    margin-right: 10px;
+    color: #ffff;
+    font-size: 18px;
+    font-family: "Poppins";
+    font-weight: 900;
+  }
+  .content_right .social_medial li {
+    margin: 0 20px 10px 0;
+  }
+  .content_right .social_medial #fa_brands {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border: 1px solid rgb(79, 79, 224);
+    background-color: #090979;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+  }
+  .content_right .social_medial #fa_brands:hover {
+    color: #000;
+    background-color: #ffff;
+  }
+  
+  .container .social_media {
+    display: flex;
+  }
+  #text_uppercase {
+    font-size: 20px;
+    color: #000;
+    font-weight: 400;
+    font-family: "Poppins";
+    justify-content: space-between;
+    text-transform: none;
+  }
+  .links .tex_reset {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 0px;
+    color: #666464;
+    font-family: "Poppins";
+  }
+  
+  .links .tex_reset:hover {
+    color: #00eda4;
+  }
+  
+  .links a::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background: #00eda4;
+    margin-right: 10px;
+  }
+  .settingsMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    padding: 10px;
+    list-style: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .settingsMenu li {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  .settingsMenu li:hover {
+    color: #00eda4;
+  }
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999; /* Đặt lớp Z-index cao hơn các thành phần khác trên trang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContent {
+    background-color: #fff;
+    /* Tùy chỉnh kiểu dáng modal */
+    z-index: 9999; /* Đặt lớp Z-index cao hơn các thành phần khác trong modal */
+  }
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }

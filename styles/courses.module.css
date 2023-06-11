@@ -1,0 +1,127 @@
+.wrapper_section_title{
+    margin: 0 0 92px;
+    background-color: rgba(0,0,0,0) !important;
+    padding: 270px 0 52px;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    clear: both;
+    float: left;
+    display: block;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    outline: 0;
+}
+
+.section_title_bg{
+    background-image: url("../public/images/breadcrumb.png");;
+    background-position: left top;
+    background-size: auto;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-color: #222222;
+    bottom: 0;
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+.container_title_bg{
+    clear: both;
+    margin: 0 auto;
+    position: relative;
+    width: 1230px;
+}
+.wrapper_section_title div{
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0px 70px;
+    vertical-align: baseline;
+}
+.bg_title_section{
+    float: left;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    position: relative;
+    width: 100%;
+}
+    .bg_title_section h1{
+        font-family: Poppins;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-transform: none;
+        color: #ffffff;
+        display: inline-block;
+        font-size: 64px;
+        line-height: 100px;
+        margin-bottom: 25px;
+        position: relative;
+        word-break: break-all;
+    }
+    .bg_title_section h1::before{
+        animation: rainbow 5s ease infinite;
+        background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+        background-color: #fff;
+        background-size: 1800% 1800%;
+        bottom: -5px;
+        content: '';
+        display: inline-block;
+        height: 3px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        
+    }
+.breadcrumb{
+    clear: both;
+    color: #fff;
+    float: left;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: .06em;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    width: 100%;
+}
+    .breadcrumb a{
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 300;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    .breadcrumb span{
+        background: transparent;
+        border: 0;
+        font-size: 100%;
+        margin: 0;
+        outline: 0;
+        padding: 0;
+        vertical-align: baseline;
+    }
+    .breadcrumb .fa_default{
+        background: #fff;
+        display: inline-block;
+        height: 14px;
+        margin: 0 10px 0 18px;
+        position: relative;
+        top: 3px;
+        transform: rotate(30deg);
+        transform-origin: 0 0;
+        width: 1px;
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        padding: 0;
+    }
+    .breadcrumb .current{
+        color: #fff;
+    }

@@ -1,0 +1,383 @@
+.main_courses{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.list_courses_container{
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 1000px;
+    clear: both;
+    
+    
+}
+.list_courses_container div{
+    border: none;
+
+}
+.list_courses_container h5{
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.list_courses_container img{
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    height: 300px;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.list_courses_container span{
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+.list_courses_container ins{
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.list_courses_container a{
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+    display: flex;
+}
+.list_courses_items{
+    position: relative;
+    height: 933.437px;
+    clear: both;
+    display: block;
+    margin: 0 -15px;
+    width: auto;
+    display: block;
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
+}
+.courseslist_wrapper_item{
+    left: 0%;
+    top: 0px;
+    transition: none;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    margin: 0 15px 30px 0;
+    clear: none;
+    width: 47%;
+    float: left;
+    min-height: 1px;
+}
+    .list_courses_items .courseslist_wrapper_item:hover{
+        box-shadow: 0 10px 20px rgba(0,0,0,.14);
+        transition: all 0.3s ease;
+    }
+    .list_courses_items .courseslist_wrapper_item:hover .courses_image{
+        border-radius: 30px 5px 5px;
+        box-shadow: 0 10px 20px rgba(0,0,0,.14);
+        transition: all 0.5s ease;
+    }
+.courseslist_image{
+    border-radius: 15px 15px 10px 10px;
+    border-bottom-color: #6a7df1;
+    overflow: visible;
+    transition: all 0.3s linear;
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    line-height: 0px;
+}
+    .courseslist_image a{
+        overflow: hidden;
+        box-shadow: none;
+        float: left;
+        width: 100%;
+        color: #00eda4;
+        text-decoration: none;
+    }
+.courseslist_details{
+    background-color: #fbfbfb;
+    border-radius: 0 0 10px 10px;
+    transition: all 0.3s linear;
+    padding: 15px 30px 0;
+    float: left;
+    position: relative;
+}
+.courseslist_details_inner{
+    position: static;
+    -webkit-transform: none;
+    transform: none;
+    padding: 0px;
+    border-style: solid;
+}
+.courseslisting_featured{
+    margin-top: 10px;
+    transition: all 0.3s linear;
+    background-color: #fed619;
+    position: relative;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    padding: 8px 12px 6px 26px;
+    line-height: normal;
+    font-weight: 300;
+    float: left;
+    margin-right: 15px;
+    color: #000;
+    margin-bottom: 5px;
+}
+    .courseslisting_featured .courseslisting_featured_text{
+        line-height: 0px;
+    }
+    .courseslisting_featured .courseslisting_featured_text::before{
+        content: "";
+        background-image: url("../public/images/star.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 10px 11px;
+        display: inline-block;
+        width: 10px;
+        height: 11px;
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        margin: auto 0;
+    }
+    .courseslist_details_inner h5{
+        font-weight: bold;
+        display: inline-block;
+        text-transform: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 15px;
+        font-size: 23px;
+        clear: both;
+        margin: 10px 0 20px;
+        line-height: normal;
+        width: 100%;
+    }
+    .courseslist_details_inner h5 a{
+        color: #222;
+        box-shadow: none;
+        text-decoration: none;
+    }
+.courseslist_description{
+    font-size: 16px;
+    line-height: 26px;
+    margin-bottom: 20px;
+    color: #474747;
+    float: left;
+    margin: 0 0 35px;
+    width: 100%;
+}
+.courseslist_metadata_holder{
+    float: left;
+    margin-bottom: 10px;
+}
+.courseslist_author_image{
+    max-width: 51px;
+    clear: both;
+    float: left;
+    margin-right: 15px;
+}
+    .courseslist_author_image a{
+        color: #474747;
+    }
+    .courseslist_author_image a img{
+        color: #474747;
+        box-shadow: 0 10px 20px rgba(0,0,0,.14);
+        border-color: #6a7df1;
+        border-radius: 100%;
+        border: 0;
+        display: inherit;
+        height: auto;
+        max-width: 100%;
+    }
+.courseslist_author_description{
+    display: inline-block;
+}
+    .courseslist_author_description p{
+        display: inline-block;
+        width: auto;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 2px 0px 0px;
+        letter-spacing: -0.04em;
+        padding: 0px;
+        background: none;
+        line-height: 28px;
+        position: relative;
+        color: #222;
+        float: none;
+    }
+    .courseslist_author_description p span{
+        font-size: 14px;
+        font-weight: 300;
+        clear: both;
+        float: left;
+        letter-spacing: 0;
+        background-color: transparent;
+    }
+    .courseslist_author_description p > span{
+        width: auto;
+        text-align: left;
+        margin-left: 0;
+        margin-right: 2px;
+        height: 100%;
+        display: inline-block;
+        line-height: 28px;
+        position: static;
+    }
+.coursesdetails_price{
+    float: right;
+    margin: 15px 0 0;
+}
+.price_status{
+    background-color: #00eda4;
+    color: #FFF;
+    padding: 6px 15px 5px;
+    margin: 0;
+    line-height: normal;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+    .price_status ins{
+        color: #FFF;
+        padding: 0;
+        background: none;
+        font-weight: 500;
+        font-size: 18px;
+        background-color: transparent !important;
+        text-decoration: none;
+    }
+.pagination{
+    margin-top: 30px;
+    width: 100%;
+    float: left;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.page_numbers{
+    float: none;
+    display: inline-block;
+    margin: 0 2px 7px;
+    width: auto;
+    padding: 0 0 10px 0;
+    list-style-position: inside;
+    list-style-type: square;
+    list-style: none;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    outline: 0;
+    vertical-align: baseline;
+}
+.page_numbers li{
+    margin-left: -1px;
+    margin-right: -1px;
+    outline: none;
+    float: none;
+    display: inline-block;
+    margin: 0 2px 7px;
+    width: auto;
+    padding: 0 0 10px 0;
+}
+.page_numbers li span{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    line-height: 60px;
+    height: 60px;
+    width: 60px;
+    font-weight: 500;
+    border-radius: 60px;
+    border-color: #00eda4;
+    background-color: #00eda4;
+    color: #fff;
+    display: inline-block;
+    float: none;
+    padding: 0 15px;
+    text-decoration: none;
+    border: none;
+    position: static;
+    transition: all 0.3s linear 0s;
+}
+.page_numbers li a{
+    font-family: 'Poppins', sans-serif;
+    background: none;
+    font-size: 18px;
+    line-height: 60px;
+    height: 60px;
+    width: 60px;
+    font-weight: 500;
+    border-radius: 60px;
+    color: #000;
+    border-color: #eee;
+    display: inline-block;
+    float: none;
+    padding: 0 15px;
+    text-decoration: none;
+    border: none;
+    position: static;
+    transition: all 0.3s linear 0s;
+    box-shadow: none;
+}
+.next_port{
+    width: auto;
+    float: none;
+    display: inline-block;
+    margin-bottom: 34px;
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.next_port a{
+    font-size: 18px;
+    line-height: 60px;
+    padding: 0 28px;
+    text-decoration: none;
+    height: 60px;
+    background: none;
+    border: none;
+    width: auto;
+    font-weight: 500;
+    border-radius: 60px;
+    color: #000;
+    display: inline-block;
+    float: none;
+    position: static;
+    transition: all 0.3s linear 0s;
+}
+

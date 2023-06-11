@@ -1,0 +1,112 @@
+
+
+.counterSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    padding: 80px 100px;
+    background-image: url("../public/images/CounterSection.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: #f1f1f1;
+  }
+  
+  .column {
+    position: relative;
+    flex-basis: 25%;
+    padding: 0 15px;
+  }
+  
+  .counter {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+    border-radius: 5px;
+  }
+  
+  .counter:hover {
+    background-color: #00eda4;
+    border-radius: 50% 50% 5px 5px;
+  }
+  
+  .counterIconHolder {
+    margin-bottom: 20px;
+  }
+  
+  .counterNumber {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .counterTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+
+  
+  .fadeInLeft {
+    animation: fadeInLeft 0.5s ease;
+  }
+  
+  .fadeInUp {
+    animation: fadeInUp 0.5s ease;
+  }
+  
+  .fadeInDown {
+    animation: fadeInDown 0.5s ease;
+  }
+  
+  .fadeInRight {
+    animation: fadeInRight 0.5s ease;
+  }
+  
+  @keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  

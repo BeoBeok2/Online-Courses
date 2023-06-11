@@ -1,0 +1,61 @@
+.load_paypal{
+    overflow: hidden;
+}
+    .load_paypal div{
+        display: block;
+    }
+.load_paypal_form{
+    text-align: center;
+    width: 1230px;
+    background: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(225, 232, 237);
+    border-image: initial;
+    padding: 40px;
+    margin: 0px auto;
+    background-color: #fafafa !important;
+    border-top: 6px solid;
+    border-color: #8fae1b;
+
+}
+.load_paypal_form_title{
+    text-align: center;
+    font-family: system-ui, Roboto, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    color: rgb(68, 68, 68);
+    margin-top: 20px;
+}
+.load_paypal_button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 40px;
+    color: #fff;
+    font-size: 18px;
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    border-radius: 30px 30px 30px;
+    border: none;
+    transition: all 0.5s ease;
+    text-decoration: none;
+    left: 50%;
+    transform: translate(240%, -50%);
+  }
+ /*  .load_paypal_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding: 10px 40px;
+    color: #fff;
+    font-size: 18px;
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    border-radius: 30px 30px 30px;
+    border: none;
+    transition: all 0.5s ease;
+    text-decoration: none;
+  } */
+  .load_paypal_button:hover{
+    border-radius: 5px;
+    }

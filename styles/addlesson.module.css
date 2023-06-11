@@ -1,0 +1,168 @@
+
+
+  .container {
+    
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fff;
+    margin: 0;
+  }
+
+  .header {
+    background-color: #ffffffb1;
+    color: #111111;
+    padding: 10px;
+  }
+
+  .header h1 {
+    margin: 0;
+  }
+
+  .form_container {
+    background-color: #fafafaf1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .form_container label {
+    font-weight: 600;
+  }
+
+  .form_container input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .form_container input[type="file"] {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .form_container input[type="number"] {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .form_container .lesson_input {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font:bold;
+  }
+
+  .form_container .add_lesson_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .form_container .add_quiz_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .form_container .add_lesson_button:hover {
+    background-color: #005cc5;
+  }
+  .form_container .add_quiz_button:hover {
+    background-color: #005cc5;
+  }
+
+  .form_container .remove_lesson_button {
+    background-color: #cb2431;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  .form_container .remove_quiz_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+  }
+
+  .form_container .remove_lesson_button:hover {
+    background-color: #af1d29;
+  }
+  .form_container .remove_quiz_button:hover {
+    background-color: #af1d29;
+  }
+
+  .form_container .submit_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1); 
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .form_container .submit_button:hover {
+    background-color: #218838;
+  }
+  .label_add_lesson{
+    margin-top: 30px;
+    font-size: 20px;
+    font:bold;
+  }
+  #button{
+    
+    color: #000;
+    font-size: 18px;
+    padding: 10px 45px 10px;
+    border-radius: 30px 30px 30px;
+    border: none;
+    transition: all 0.5s ease;
+    text-decoration: none;
+    margin: 10px 0;
+
+}
+    #button:hover{
+        border-radius: 5px;
+        color: floralwhite;
+        
+    }
+    @keyframes rainbow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .line_lesson{
+        animation: rainbow 5s ease infinite;
+        background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+        background-color: #fff;
+        background-size: 1800% 1800%;
+        content: '';
+        display: inline-block;
+        height: 3px;
+        left: 0;
+        position: absolute;
+        width: 53.5%;
+        right: 1px;
+    }
+    

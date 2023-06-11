@@ -1,133 +1,213 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Head from 'next/head'
+import React, { useState, useEffect } from 'react';
+import Styles from '@/styles/home.module.css';
+import Header from './courses/footer/header';
+import Footer from './courses/footer/footer';
+import Slide from './components/Home/Slider';
+import TabsPage from './components/Home/TabPage';
+import CounterSection from './components/Home/CounterSection';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
-const inter = Inter({ subsets: ['latin'] })
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  price: string;
+  currency: string;
+  level: string;
+  language: string;
+  duration: string;
+  thumbnail: {
+    url: string;
+    width: string;
+    height: string;
+  };
+}
 
 export default function Home() {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  let accessToken: string | null = null;
+  let isMounted = true;
+
+  if (typeof window !== 'undefined') {
+    accessToken = sessionStorage.getItem('accessToken');
+  }
+
+  function handlePageChange(newPage: number) {
+    setCurrentPage(newPage);
+  }
+
+  function callAPI(pageSize: number, page: number) {
+    axios({
+      method: 'GET',
+      url: `http://localhost:3000/courses?pageSize=${pageSize}&page=${page}`,
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then(response => {
+        console.log(response.data.courses);
+        if ('courses' in response.data) {
+          const courses = response.data.courses as Course[];
+          const coursesWithSelectedFields = courses.map(course => ({
+            id: course.id,
+            title: course.title,
+            description: course.description,
+            imageUrl: course.thumbnail.url,
+            price: course.price,
+            currency: course.currency,
+            level: course.level,
+            language: course.language,
+            duration: course.duration,
+            thumbnail: {
+              url: course.thumbnail.url,
+              width: course.thumbnail.width,
+              height: course.thumbnail.height,
+            },
+          }));
+          setCourses(coursesWithSelectedFields);
+          setTotalPages(Math.ceil(response.data.totalCourses / pageSize));
+        }
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 401) {
+          alert(error.response.data.message + '. Xin vui lòng đăng nhập lại!');
+          console.log(error.response.data.message);
+          sessionStorage.removeItem('accessToken');
+          router.push('http://localhost:8080/courses/login');
+        }
+      });
+  }
+
+  useEffect(() => {
+    callAPI(3, currentPage);
+    setIsLoading(false);
+    return () => {
+      // cleanup function to prevent state update on unmounted component
+      isMounted = false;
+    };
+  }, [currentPage]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-    <Head>
-      <title>
-        Online Courses
-      </title>
-    </Head>
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <Header />
+      <Slide />
+      <CounterSection/>
+      <TabsPage/>
+      <div className={Styles.main_courses}>
+        <div className={Styles.list_courses_container}>
+          <div className={Styles.list_courses_items}>
+            {courses.map(course => (
+              <div className={Styles.courseslist_wrapper_item} key={course.id}>
+                <div className={Styles.courseslist_image}>
+                  <a
+                    href={`http://localhost:8080/courses/courses/listcourses/${course.id}`}
+                    title='Courses A'
+                  >
+                    <img
+                      src="https://elearni.wpengine.com/wp-content/uploads/2014/08/course-10.jpg"
+                      alt=""
+                      width='100%'
+                      className={Styles.courses_image}
+                      alt-decoding='async'
+                      loading='lazy'
+                    />
+                  </a>
+                </div>
+                <div className={Styles.courseslist_details}>
+                  <div className={Styles.courseslist_details_inner}>
+                    <div className={Styles.courseslisting_featured}>
+                      <span className={Styles.courseslisting_featured_text}>
+                        {course.level}
+                      </span>
+                    </div>
+                    <h5>
+                      <a href={`http://localhost:8080/courses/courses/listcourses/${course.id}`}>
+                        {course.title}
+                      </a>
+                    </h5>
+                    <div className={Styles.courseslist_description}>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ...
+                    </div>
+                    <div className={Styles.courseslist_metadata_holder}>
+                      <div className={Styles.courseslist_author_image}>
+                        <a href="#">
+                          <img
+                            src={course.imageUrl}
+                            alt=""
+                            className='avatar'
+                            width={150}
+                            height={150}
+                            loading='lazy'
+                            decoding='async'
+                          />
+                        </a>
+                      </div>
+                      <div className={Styles.courseslist_author_description}>
+                        <p>
+                          <a href="#" rel='author'>
+                            Hoàng Phúc
+                          </a>
+                          <span></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className={Styles.coursesdetails_price}>
+                      <span className={Styles.price_status}>
+                        <ins>
+                          <span className={Styles.price_amount}>
+                            {course.price}
+                            <span className={Styles.price_current_symbol}>$</span>
+                          </span>
+                        </ins>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={Styles.pagination}>
+            <ul className={Styles.page_numbers}>
+              {Array.from({ length: totalPages }, (_, index) => {
+                const pageNum = index + 1;
+                const isActive = pageNum === currentPage;
+                return (
+                  <li key={pageNum}>
+                    {isActive ? (
+                      <span aria-current='page' id='page_numbers_current' className={Styles.page_numbers}>
+                        {pageNum}
+                      </span>
+                    ) : (
+                      <a href={`#${pageNum}`} className={Styles.page_numbers} onClick={() => handlePageChange(pageNum)}>
+                        {pageNum}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            <div className={Styles.next_port}>
+              {currentPage !== totalPages && (
+                <a href={`#${currentPage + 1}`} onClick={() => handlePageChange(currentPage + 1)}>
+                  Next&nbsp;
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      
+      <Footer />
     </>
-  )
+  );
 }
+

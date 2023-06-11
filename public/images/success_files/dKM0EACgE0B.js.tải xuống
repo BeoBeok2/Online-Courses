@@ -1,0 +1,9 @@
+;/*FB_PKG_DELIM*/
+
+__d("LSUpdateDeliveryReceipt",[],(function(a,b,c,d,e,f){function a(){var a=arguments,b=a[a.length-1];b.n;var c=[];return b.seq([function(c){return b.fe(b.ftr(b.db.table(14).fetch([[[a[1],a[2]]]]),function(c){return b.i64.eq(c.threadKey,a[1])&&b.i64.eq(b.i64.cast([0,0]),b.i64.cast([0,0]))&&b.i64.eq(c.contactId,a[2])&&b.i64.gt(a[0],c.deliveredWatermarkTimestampMs)}),function(b){var c=b.update;b.item;return c({deliveredWatermarkTimestampMs:a[0]})})},function(a){return b.resolve(c)}])}b=a;f["default"]=b}),66);
+__d("CometMarketplaceYouAlertsContentContainerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="7158148157591305"}),null);
+__d("CometMarketplaceYouFollowingContentContainerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="5855262501266803"}),null);
+__d("CometMarketplaceYouShippingOrdersFastContentContainerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="6153562968046558"}),null);
+__d("GroupsCometViewerContentAdminFeedbackDialogQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="6222367711156147"}),null);
+__d("MarketplaceBoostedListingsContentContainerQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="6104339216250903"}),null);
+__d("MarketplaceCometSetUpShippingLandingExperienceDialogQuery_facebookRelayOperation",[],(function(a,b,c,d,e,f){e.exports="6250785634966449"}),null);

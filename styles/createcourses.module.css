@@ -1,0 +1,360 @@
+.container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+  
+  .progress {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  .progressBar {
+    height: 100%;
+    background-color: #00eda4;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+  }
+  
+  .content {
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .stepTitle {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .stepDescription {
+    margin-bottom: 20px;
+  }
+  
+  .buttonPanel {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .buttonOption {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+  
+  .optionLabel {
+    font-size: 18px;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .container label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  .container textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  .container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  
+  .continueButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 45px 15px;
+    border-radius: 30px;
+    border: none;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  
+  .backButton {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 45px 15px;
+    border-radius: 30px;
+    border: none;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  
+  .saveButton {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 45px 15px;
+    border-radius: 30px;
+    border: none;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  .disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .continueButton:hover {
+    border-radius: 5px;
+  }
+  .backButton:hover {
+    border-radius: 5px;
+  }
+  .saveButton:hover {
+    border-radius: 5px;
+  }
+  
+
+
+
+
+
+  
+  
+  
+  /* styles.module.css */
+
+/* Curriculum List */
+.curriculumList {
+    margin-bottom: 20px;
+  }
+  
+  /* Curriculum Item */
+  .curriculumItem {
+    margin-bottom: 10px;
+  }
+  
+  /* Lesson */
+  .lesson {
+    margin-left: 20px;
+  }
+  
+  .inlineInsertLesson {
+    margin-top: 5px;
+    margin-left: -20px;
+  }
+  
+  .inlineInsertButtonRow {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .inlineInsertButton {
+    padding: 5px;
+    background-color: #f7f9fc;
+    border: 1px solid #d2d7e0;
+    border-radius: 4px;
+    color: #6c757d;
+    cursor: pointer;
+  }
+  
+  .addLessonIcon {
+    width: 14px;
+    height: 14px;
+    fill: #6c757d;
+  }
+  
+  .inlineInsertButton:hover {
+    background-color: #e6eaf2;
+  }
+  
+  .inlineInsertButton:focus {
+    outline: none;
+  }
+  
+  .inlineInsertButton:active {
+    background-color: #d2d7e0;
+  }
+  
+  .popper {
+    position: relative;
+  }
+  
+  .curriculumItemHandle {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: #f7f9fc;
+    border: 1px solid #d2d7e0;
+    border-radius: 4px;
+    cursor: move;
+    outline: none;
+  }
+  
+  .curriculumItemHandle:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+  
+  .itemBarMain {
+    flex: 1;
+  }
+  
+  .itemBarLeft {
+    display: flex;
+    align-items: center;
+  }
+  
+  .itemBarLeftContent {
+    display: flex;
+    align-items: center;
+  }
+  
+  .itemObjectIndex {
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #212529;
+  }
+  
+  .itemTitleDesktop {
+    display: none;
+    margin-left: 5px;
+  }
+  
+  .lessonIcon {
+    width: 18px;
+    height: 18px;
+    fill: #6c757d;
+  }
+  
+  .itemEllipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+  }
+  
+  .itemIconButton {
+    padding: 3px;
+    margin-left: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .linkNeutral {
+    color: #6c757d;
+  }
+  
+  .itemIconButton:focus {
+    outline: none;
+  }
+  
+  .itemIconButton:hover {
+    color: #4178c0;
+  }
+  
+  .itemIconButton:active {
+    color: #2b65a8;
+  }
+  
+  .itemBarRight {
+    display: flex;
+    align-items: center;
+  }
+  
+  .itemBarDragHandle {
+    padding: 3px;
+    margin-right: 5px;
+    cursor: move;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+    fill: #6c757d;
+  }
+  
+  .icon:hover {
+    fill: #4178c0;
+  }
+  
+  .icon:active {
+    fill: #2b65a8;
+  }
+  
+  #ud_icon{
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #1c1d1f;
+    margin-right: 0.4rem;
+  }
+  .form_container {
+    margin-top: 20px;
+  }
+  
+  .lesson_input {
+    margin-top: 10px;
+  }
+  
+  .quiz_input {
+    margin-top: 10px;
+  }
+  
+  
+#button{
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #000;
+    font-size: 18px;
+    padding: 20px 45px 20px;
+    border-radius: 30px 30px 30px;
+    border: none;
+    transition: all 0.5s ease;
+    text-decoration: none;
+
+}
+    #button:hover{
+        border-radius: 5px;
+    }

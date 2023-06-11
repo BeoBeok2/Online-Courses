@@ -1,8 +1,8 @@
 
 .page_login{
-    background-image: url("../public/images/pagelogin.jpeg");
+    /* background-image: url("../public/images/pagelogin.jpeg");
     background-size: cover;
-    background-position: center;
+    background-position: center; */
     height: 100vh;
 }
 .dtlms_login_container{

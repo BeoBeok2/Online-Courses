@@ -1,0 +1,142 @@
+.payment_container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .payment_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .payment_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user_info {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .user_greeting {
+    margin-bottom: 10px;
+  }
+  
+  .greeting_text {
+    font-size: 18px;
+  }
+  
+  .login_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 45px 15px;
+    border-radius: 30px 30px 30px;
+    /* margin: 10px 40px 0px 0px; */
+    border: none;
+    transition: all 0.5s ease;
+  }
+  .login_button:hover{
+    border-radius: 5px;
+    }
+  
+  .payment_details {
+    width: 100%;
+  }
+  
+  .summary_title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .method_title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #pay_button {
+    background-image: linear-gradient(to right, #00eda4, #6a7df1);
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 45px 15px;
+    border-radius: 30px 30px 30px;
+    margin-left: 155px;
+    border: none;
+    transition: all 0.5s ease;
+  }
+  #pay_button:hover{
+    border-radius: 5px;
+    }
+    
+  .visible {
+    display: block;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .paypal_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .paypal_logo {
+    width: 120px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .paypal_button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .summary_details {
+    margin-top: 10px;
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .price_section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 165px;
+    margin-top: 10px;
+  }
+  
+  .price_label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .original_price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+  }
+  
+  .discounted_price {
+    font-weight: bold;
+    color: #007bff;
+  }
+  .price_divider {
+    border: none;
+    border-top: 1px solid black;
+    margin: 5px 0;
+  }
+  .payment_summary{
+    margin-bottom: 50px;
+  }
