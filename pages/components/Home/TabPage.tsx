@@ -58,8 +58,8 @@ const TabsPage = () => {
                         </a>
                     </div>
                     <div className={Styles.img_Content}>
-                        <img src="../images/home-tab-3.jpg" alt="Image 1" />
-                        <img src="../images/home-tab-3.jpg" alt="Image 2" />
+                        <img src="../images/girl-ipad.jpg" alt="Image 1" className={Styles.img_first}/>
+                        <img src="../images/home-tab-4.jpg" alt="Image 2" className={Styles.img_second}/>
                     </div>
                 </div>
                 <div id={Styles.content2} className={`${Styles.tabPanel} ${activeTab === 'tab2' ? Styles.active : ''}`}>
@@ -77,8 +77,8 @@ const TabsPage = () => {
                         </a>
                     </div>
                     <div className={Styles.img_Content}>
-                        <img src="../images/home-tab-3.jpg" alt="Image 1" />
-                        <img src="../images/home-tab-3.jpg" alt="Image 2" />
+                        <img src="../images/home-tab-2.jpg" alt="Image 1" className={Styles.img_first}/>
+                        <img src="../images/home-tab-3.jpg" alt="Image 2" className={Styles.img_second}/>
                     </div>
                 </div>
                 <div id={Styles.content3} className={`${Styles.tabPanel} ${activeTab === 'tab3' ? Styles.active : ''}`}>
@@ -96,8 +96,8 @@ const TabsPage = () => {
                         </a>
                     </div>
                     <div className={Styles.img_Content}>
-                        <img src="../images/home-tab-3.jpg" alt="Image 1" />
-                        <img src="../images/home-tab-3.jpg" alt="Image 2" />
+                        <img src="../images/man-laptop.jpg" alt="Image 1" className={Styles.img_first}/>
+                        <img src="../images/student-writing.jpg" alt="Image 2" className={Styles.img_second}/>
                     </div>
                 </div>
             </div>

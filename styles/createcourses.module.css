@@ -41,6 +41,9 @@
   .stepDescription {
     margin-bottom: 20px;
   }
+  #stepDescription1 {
+    font-size: 23px;
+  }
   
   .buttonPanel {
     display: flex;

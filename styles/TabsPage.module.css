@@ -173,7 +173,14 @@
       }
       .img_Content img{
           width: 250px;
-        height: 500px;
+          height: 500px;
+          border-radius: 5%;
+      }
+      .img_Content .img_first{
+        margin-right: 30px;
+      }
+      .img_Content .img_second{
+        margin-top: 50px;
       }
     
   .center {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Styles from '@/styles/home.module.css';
-import Header from './courses/footer/header';
-import Footer from './courses/footer/footer';
+import Header from './components/footerheader/header';
+import Footer from './components/footerheader/footer';
 import Slide from './components/Home/Slider';
 import TabsPage from './components/Home/TabPage';
 import CounterSection from './components/Home/CounterSection';
