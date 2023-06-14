@@ -1,36 +1,55 @@
 import Styles from '@/styles/footer.module.css';
 import { ST } from 'next/dist/shared/lib/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 import { FaFontAwesome } from 'react-icons/fa';
 import Login from '../../login';
 
 export default function Header() {
-    const [userEmail, setUserEmail] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
-    const [showSettingsMenu, setShowSettingsMenu] = useState(false);
-
-    const toggleSettingsMenu = () => {
-        setShowSettingsMenu(!showSettingsMenu);
-    };
+    const [isHovered, setIsHovered] = useState(false);
 
     const handleLogin = (email: string) => {
-        setUserEmail(email);
-        setLoggedIn(true);
+        // handle login logic
     };
+
     const handleOpenModal = () => {
         setShowModal(true);
     };
 
     const handleLogout = () => {
-        setUserEmail('');
+        // Xóa access token và người dùng khỏi sessionStorage
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('user');
+      
+        // Đặt trạng thái đăng nhập thành false
         setLoggedIn(false);
-    };
+      
+        // Thực hiện các bước khác sau khi đăng xuất (ví dụ: điều hướng tới trang chủ, hiển thị thông báo, vv.)
+      };
+
     const closeModal = () => {
         setShowModal(false);
-      };
-      
+    };
+
+    const handleAvatarHover = () => {
+        setIsHovered(true);
+    };
+
+    const handleAvatarLeave = () => {
+        setIsHovered(false);
+    };
+
+    useEffect(() => {
+        const user = sessionStorage.getItem('user');
+        if (user) {
+            const userData = JSON.parse(user);
+            setUserAvatar(userData.avatar.url);
+            setLoggedIn(true);
+        }
+    }, []);
     return (
         <>
 
@@ -72,48 +91,37 @@ export default function Header() {
                         </ul>
                         <div className={Styles.account}>
                             <div className={Styles.login}>
-                                <a className="fa fa-cart" href="http://localhost:8080/cart"><i className="fa fa-shopping-cart" /></a>
-                            </div>
-                            {loggedIn ? (
-                                <div className={Styles.login}>
-                                    <span>{userEmail}</span>
-                                    <a className="fa fa-cog" href="#" onClick={toggleSettingsMenu}>
-                                        <FaCog />
-                                    </a>
-                                    {showSettingsMenu && (
-                                        <ul className={Styles.settingsMenu}>
-                                            <li><a href="http://localhost:8080/user/profile">Thông tin cá nhân</a></li>
-                                            <li><a href="http://localhost:8080/instructor">Instructor</a></li>
-                                            <li>
-                                                <a
-                                                    className="fa fa-user-times"
-                                                    href="/logout"
-                                                    onClick={handleLogout}
-                                                >
-                                                    Logout
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    )}
+                                {loggedIn ? (
+                                    <div className={Styles.avatar_container}>
+                                        <img src={userAvatar} alt="Avatar" className={Styles.avatar} />
+                                        <div className={Styles.menu}>
+                                            
+                                            <a href="http://localhost:8080/user/profile">Thông tin cá nhân</a>
+                                            <a href="http://localhost:8080/instructor">Instructor</a>
+                                            <a href="#" onClick={handleLogout}>Logout</a>
+                                        </div>
 
-                                </div>
-                            ) : (
-                                <div className={Styles.login}>
-                                    <a
-                                        className="fa fa-unlock-alt"
-                                        // href="http://localhost:8080/courses/login"
-                                        onClick={handleOpenModal}
-                                    >
-                                        Login
-                                    </a>
-                                    <a
-                                        className="fa fa-user-plus"
-                                        href="http://localhost:8080/register"
-                                    >
-                                        Register
-                                    </a>
-                                </div>
-                            )}
+                                    </div>
+
+
+                                ) : (
+                                    <div>
+                                        <a
+                                            className="fa fa-unlock-alt"
+                                            // href="http://localhost:8080/courses/login"
+                                            onClick={handleOpenModal}
+                                        >
+                                            Login
+                                        </a>
+                                        <a
+                                            className="fa fa-user-plus"
+                                            href="http://localhost:8080/register"
+                                        >
+                                            Register
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div className={Styles.under_nav}>
@@ -200,7 +208,7 @@ export default function Header() {
                         {/* Ví dụ: */}
                         <Login />
                         <div className={Styles.closeButton} onClick={closeModal}>
-                          <img src="../../../images/close.png" alt="close" width={30} height={30} />
+                            <img src="../../../images/close.png" alt="close" width={30} height={30} />
                         </div>
                     </div>
                 </div>

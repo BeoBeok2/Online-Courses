@@ -25,41 +25,7 @@ export default function ForgotPassword () {
         event.preventDefault();
         console.log(`Email: ${email}`);
         router.push('http://localhost:8080/forgotpassword/resultforgotpassword');
-        // Gửi thông tin email và recaptchaToken lên server để xác nhận
-        /* xử lí ở server,  CLIENT_ID là mã ID của ứng dụng được đăng ký{
-            const { OAuth2Client } = require('google-auth-library');
-            const client = new OAuth2Client(CLIENT_ID);
-
-            async function verifyRecaptcha(recaptchaToken) {
-            try {
-                const ticket = await client.verifyIdToken({
-                idToken: recaptchaToken,
-                audience: CLIENT_ID,
-                });
-                const payload = ticket.getPayload();
-                const userId = payload['sub'];
-                // Xác nhận thành công
-                return true;
-            } catch (err) {
-                console.error('Xác nhận Captcha thất bại:', err);
-                return false;
-            }
-            }
-
-            app.post('/forgot-password', async (req, res) => {
-            const { email, recaptchaToken } = req.body;
-
-            // Xác nhận Captcha
-            const isCaptchaVerified = await verifyRecaptcha(recaptchaToken);
-            if (!isCaptchaVerified) {
-                res.status(400).send('Vui lòng xác nhận Captcha.');
-                return;
-            }
-
-            // Tiếp tục quá trình quên mật khẩu
-            // ...
-            });
-        } */
+        
     };
     return(
         <>

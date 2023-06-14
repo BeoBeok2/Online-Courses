@@ -36,6 +36,7 @@
     outline: 0;
     padding: 0;
     vertical-align: baseline;
+    width: 100%;
 }
 .list_courses_container span{
     border: 0;
@@ -286,6 +287,33 @@
     padding: 0;
     vertical-align: baseline;
 }
+/* CSS cho các button trong pagination */
+.pagination button {
+    /* Kích thước và đường viền */
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    
+    /* Màu nền và màu chữ */
+    background-color: #FFFFFF;
+    color: #000000;
+    
+    /* Khoảng cách giữa các button */
+    margin: 0 5px;
+    
+    /* Hiệu ứng hover */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  
+ .pagination button:hover {
+    /* Màu nền và màu chữ khi hover */
+    background-color: #00eda4;
+    color: #FFFFFF;
+    
+    /* Đường viền bóng */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
 .page_numbers{
     float: none;
     display: inline-block;
@@ -381,3 +409,19 @@
     transition: all 0.3s linear 0s;
 }
 
+.btn {
+    margin: 0px auto;
+    float: right;
+    margin-bottom: 30px;
+    color: aliceblue;
+    font-family: var(--font-heading);
+    display: flex;
+    width: 200px;
+    justify-content: space-around;
+    padding: 20px 20px;
+    background: linear-gradient(to right, rgb(0, 237, 164), rgb(106, 125, 241));
+    border-radius: 30px 10px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+  }

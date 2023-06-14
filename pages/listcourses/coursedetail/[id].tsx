@@ -1,14 +1,51 @@
 import Styles from '@/styles/coursesdetail.module.css';
 import Head from 'next/head';
-import Review from '../components/course/review';
-import TopFooter from '../components/footerheader/topfooter';
-import Banner from '../components/footerheader/banner';
-import Header from '../components/footerheader/header';
-import Footer from '../components/footerheader/footer';
-import { useState } from 'react';
+import Review from '../../components/course/review';
+import TopFooter from '../../components/footerheader/topfooter';
+import Banner from '../../components/footerheader/banner';
+import Header from '../../components/footerheader/header';
+import Footer from '../../components/footerheader/footer';
+import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import YouTube from 'react-youtube';
+import axios from 'axios';
+import host from '@/pages/api/host';
+import { useRouter } from 'next/router';
 
+
+interface Course {
+  id: string;
+  title: string;
+  level: string;
+  description: string;
+  language: string;
+  price: {
+    value: string;
+    currency: string;
+  };
+  NumReviews: string;
+  AvgRating: string;
+  thumbnail: {
+    url: string;
+    width: string;
+    height: string;
+  };
+  instructor: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    userId: string;
+    NumStudents: string;
+    NumReviews: string;
+    TotalCourses: string;
+    avt: {
+      url: string;
+      width: string;
+      height: string;
+    };
+  };
+}
 export default function CourseDetail() {
   // const [showModal, setShowModal] = useState(false);
   // const [videoSource, setVideoSource] = useState('');
@@ -23,10 +60,32 @@ export default function CourseDetail() {
   //   setShowModal(false);
   // };
   // const videoIde = '3lwpE5x_DCI';
+  const [course, setCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [videoId, setVideoId] = useState('');
   const [showMenu, setShowMenu] = useState(false);
 
+  const router = useRouter();
+  const { id } = router.query;
+  function callAPI(id: any) {
+    axios({
+      method: 'GET',
+      url: `${host}/courses/${id}`,
+    })
+      .then(response => {
+        const course = response.data.course as Course;
+        setCourse(course);
+      })
+      .catch(error => {
+        console.log(error);
+        router.push('http://localhost:8080/components/error');
+      });
+  }
+  useEffect(() => {
+    if (id) {
+      callAPI(id);
+    }
+  }, [id]);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -75,51 +134,53 @@ export default function CourseDetail() {
       <div className={Styles.main}>
         <Banner title='Courses Detail' />
         {/* ======= Course =============== */}
-        <div className={Styles.course}>
-          <div className={Styles.container}>
-            <div className={Styles.left_content}>
-              <div className={Styles.stamp}>
-                <i className="fa-sharp fa-solid fa-star"></i> <span>Beginner</span>
-              </div>
-              <div className={Styles.left_title}>
-                <h1>Lập trình với C#</h1>
-                <span className={Styles.des_title}>₹10</span>
-              </div>
-              <div className={Styles.info}>
-                <div className={Styles.avatar}>
-                  <img src="../../../images/rv-avt3.jpg" alt="avatar" />
-                  <p className={Styles.name_avatar}>Văn Bảo</p>
+        {course && (
+          <div className={Styles.course} key={course.id}>
+            <div className={Styles.container}>
+              <div className={Styles.left_content}>
+                <div className={Styles.stamp}>
+                  <i className="fa-sharp fa-solid fa-star"></i> <span>{course.level}</span>
                 </div>
-                <div className={Styles.slot}>
-                  <i className="fa-solid fa-book"></i>
-                  <p className={Styles.des_slot}>Bài học</p>
+                <div className={Styles.left_title}>
+                  <h1>{course.title}</h1>
+                  <span className={Styles.des_title}>{course.price.value} {course.price.currency}</span>
                 </div>
-                <div className={Styles.review}>
-                  <i className="fa-solid fa-star" id={Styles.fa_review}></i>
-                  <i className="fa-solid fa-star" id={Styles.fa_review}></i>
-                  <i className="fa-solid fa-star" id={Styles.fa_review}></i>
-                  <i className="fa-solid fa-star" id={Styles.fa_review}></i>
-                  <i className="fa-solid fa-star" id={Styles.fa_review}></i>
-                  <p>( 6 review )</p>
+                <div className={Styles.info}>
+                  <div className={Styles.avatar}>
+                    <img src={course.instructor.avt.url} alt="avatar" />
+                    <p className={Styles.name_avatar}>{course.instructor.firstName} {course.instructor.lastName}</p>
+                  </div>
+                  <div className={Styles.slot}>
+                    <i className="fa-solid fa-book"></i>
+                    <p className={Styles.des_slot}>Bài học</p>
+                  </div>
+                  <div className={Styles.review}>
+                    <i className="fa-solid fa-star" id={Styles.fa_review}></i>
+                    <i className="fa-solid fa-star" id={Styles.fa_review}></i>
+                    <i className="fa-solid fa-star" id={Styles.fa_review}></i>
+                    <i className="fa-solid fa-star" id={Styles.fa_review}></i>
+                    <i className="fa-solid fa-star" id={Styles.fa_review}></i>
+                    <p>( 6 review )</p>
+                  </div>
+                </div>
+                <div className={Styles.share_course}>
+                  <p className="des-course">Share this Course:</p>
+                  <div className={Styles.social_medial}>
+                    <i className="fa-brands fa-facebook-f" id={Styles.fa_icon}></i>
+                    <i className="fa-brands fa-twitter" id={Styles.fa_icon}></i>
+                    <i className="fa-brands fa-google-plus-g" id={Styles.fa_icon}></i>
+                  </div>
                 </div>
               </div>
-              <div className={Styles.share_course}>
-                <p className="des-course">Share this Course:</p>
-                <div className={Styles.social_medial}>
-                  <i className="fa-brands fa-facebook-f" id={Styles.fa_icon}></i>
-                  <i className="fa-brands fa-twitter" id={Styles.fa_icon}></i>
-                  <i className="fa-brands fa-google-plus-g" id={Styles.fa_icon}></i>
+              <div className={Styles.right_content}>
+                <div className={Styles.btn_cart}>
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  Add to Cart
                 </div>
-              </div>
-            </div>
-            <div className={Styles.right_content}>
-              <div className={Styles.btn_cart}>
-                <i className="fa-solid fa-cart-shopping"></i>
-                Add to Cart
               </div>
             </div>
           </div>
-        </div>
+        )}
         {/* <!-- ====== list product ========= --> */}
         <ul className={Styles.list_nav}>
           <li className={Styles.supp1}>01 Curriculum</li>

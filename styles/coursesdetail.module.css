@@ -73,7 +73,7 @@
   }
   .container .left_content .info::after {
     position: absolute;
-    left: 165px;
+    left: 43%;
     content: "";
     display: block;
     width: 4px;
@@ -114,7 +114,7 @@
   }
   .info .slot::after {
     position: absolute;
-    left: 215px;
+    left: 123%;
     content: "";
     display: inline-table;
     width: 4px;

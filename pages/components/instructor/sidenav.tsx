@@ -20,20 +20,23 @@ const SideNav = () => {
       onMouseLeave={handleMouseLeave}
     >
       <button className={Styles.toggleButton}>
-        <img className={Styles.logo} width={127} height={30} src="https://elearni.wpenginepowered.com/wp-content/uploads/2018/12/logo.png" alt="" />
+        <img
+          className={`${Styles.logo} ${isSideNavOpen ? Styles.logoHover : ''}`}
+          src={isSideNavOpen ? "../../../images/logo1.png" : "../../../favicon.ico"}
+          alt=""
+        />
       </button>
       <ul className={Styles.navList}>
         <li className={Styles.navItem}>
-            <a href="http://localhost:8080/intructor">Profile</a>
+          <a href="http://localhost:8080/instructor">Profile</a>
         </li>
         <li className={Styles.navItem}>
-        <a href="http://localhost:8080/instructor/courses">Khóa học</a>
+          <a href="http://localhost:8080/instructor/courses">Khóa học</a>
         </li>
         <li className={Styles.navItem}>
-        <a href="http://localhost:8080/instructor/payment">Thanh Toán</a>
+          <a href="http://localhost:8080/instructor/payment">Thanh Toán</a>
         </li>
       </ul>
-      
     </div>
   );
 };

@@ -121,10 +121,10 @@
   .image_container::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
+    top: -8%;
+    left: -15%;
     right: -50%;
-    bottom: -65%;
+    bottom: -220%;
     background-image: url('../public/images/shapes-bg.webp');
     background-repeat: no-repeat;
     background-size: contain;

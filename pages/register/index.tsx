@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 import Footer from '../components/footerheader/footer';
 import Header from '../components/footerheader/header';
 import Banner from '../components/footerheader/banner';
+import host from '../api/host';
+import zxcvbn from 'zxcvbn';
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,63 +25,67 @@ export default function Register() {
     const [phonenumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
 
-    // const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-    //     setPassword(event.target.value);
-    // };
-    
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setIsLoading(true);
-        axios({
-            method: 'POST',
-            url: 'http://localhost:3000/auth/register',
-            data: {
-                firstName: firstname,
-                lastName: lastname,
-                Email: email,
-                Password: password,
-                PhoneNumber: phonenumber,
-                Address: address
-              // Thêm các trường dữ liệu khác nếu cần thiết
-            },
-            headers: {
-              'Content-Type': 'application/json'
-            }
+
+        if (isPasswordStrongEnough()) {
+            setIsLoading(true);
+            axios({
+                method: 'POST',
+                url: `${host}/auth/register`,
+                data: {
+                    firstName: firstname,
+                    lastName: lastname,
+                    Email: email,
+                    Password: password,
+                    PhoneNumber: phonenumber,
+                    Address: address
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }).then(response => {
                 console.log('ok');
                 console.log(response.data);
                 setIsLoading(false);
-                alert('Bạn cần vào email để xác minh verify!')
+                setEmail('');
+                setPassword('');
+                setUserName('');
+                setFirstName('');
+                setLastName('');
+                setPhoneNumber('');
+                setAddress('');
                 
+                alert('Bạn cần vào email để xác minh verify!');
             }).catch(error => {
-                console.log('error');
-                console.log(error);
                 setIsLoading(false);
-                alert('Bạn cần vào email để xác minh verify!')
-                /* router.push('http://localhost:3000/courses/register/successverify'); */
+                alert(error.response.data.message);
             });
-        setEmail('');
-        setPassword('');
-        setUserName('');
-        setFirstName('');
-        setLastName('');
-        setPhoneNumber('');
-        setAddress('');
-
-    };
-    const handleToggleClick = () => {
-        setShowPassword(!showPassword);
+            router.push('http://localhost:8080');
+        } else {
+            alert('Mật khẩu chưa đủ an toàn. Vui lòng chọn một mật khẩu khác!');
+        }
         
     };
-    
-    return(
+
+    const handleToggleClick = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const isPasswordStrongEnough = () => {
+        const testResult = zxcvbn(password);
+        return testResult.score >= 2; // Check if password score is at least 2 ("Fair" or higher)
+    };
+
+
+    return (
         <>
-            <Header/>
+            <Header />
             <Banner title='Courses Account' />
             <main>
                 <div className={Styles.main}>
                     <form className={Styles.container} onSubmit={handleSubmit}>
-                        
+
                         <br />
                         <div className={Styles.formregister}>
                             <div className={Styles.layoutwrap}>
@@ -91,17 +97,17 @@ export default function Register() {
                                     <input type="email" name='signup_email' id='signup_email' value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     <label htmlFor="pass1">Choose a Password (required)</label>
                                     <div className={Styles.passwordwrap}>
-                                        <input 
+                                        <input
                                             type={showPassword ? "text" : "password"}
                                             id={Styles.pass1}
                                             name='signup_password'
                                             value={password}
                                             placeholder='Nhập pass'
                                             onChange={(e) => setPassword(e.target.value)}
-                                            spellCheck="false" 
-                                            autoComplete='off' 
+                                            spellCheck="false"
+                                            autoComplete='off'
                                             aria-autocomplete='list'
-                                            
+
                                         />
                                         <button type='button' onClick={handleToggleClick} className={Styles.button_hide_pass} >
                                             {showPassword ? <img src="../../images/hide-pass.jpg" width="40px" alt="hidepass" /> : <img src="../../images/show-pass.jpg" width="40px" alt="pass" />}
@@ -119,11 +125,11 @@ export default function Register() {
                                     <div className={Styles.signup_fullname}>
                                         <p className={Styles.signup_firstname}>
                                             <label htmlFor="signup_firstname">Fisrt Name (required)</label>
-                                            <input type="text" name='signup_firstname' id='signup_firstname' value={firstname} onChange={(e) => setFirstName(e.target.value)} required  />
+                                            <input type="text" name='signup_firstname' id='signup_firstname' value={firstname} onChange={(e) => setFirstName(e.target.value)} required />
                                         </p>
                                         <p className={Styles.signup_lastname}>
                                             <label htmlFor="signup_lastname">Last Name (required)</label>
-                                            <input type="text" name='signup_lastname' id='signup_lastname' value={lastname} onChange={(e) => setLastName(e.target.value)} required  />
+                                            <input type="text" name='signup_lastname' id='signup_lastname' value={lastname} onChange={(e) => setLastName(e.target.value)} required />
 
                                         </p>
                                     </div>
@@ -132,25 +138,25 @@ export default function Register() {
                                         <span className={Styles.field_level}>Everyone</span>
                                     </p>
                                     <label htmlFor="signup_phonenumber">Phone Number (required)</label>
-                                    <input type="number" name='signup_phonenumber' id='signup_phonenumber' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} required  />
+                                    <input type="number" name='signup_phonenumber' id='signup_phonenumber' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
                                     <div className={Styles.signup_address}>
                                         <label htmlFor="signup_address" >Address (required)</label>
-                                        <input type="address" name='signup_address' id='signup_address' value={address} onChange={(e) => setAddress(e.target.value)} required  />
+                                        <input type="address" name='signup_address' id='signup_address' value={address} onChange={(e) => setAddress(e.target.value)} required />
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
                         <div className={Styles.submit}>
                             <button type="submit" id={Styles.submit} disabled={isLoading}>
-                                {isLoading ? <Skeleton width={80} height={25} /> : 'Complete Sign Up'}   
+                                {isLoading ? <Skeleton width={80} height={25} /> : 'Complete Sign Up'}
                             </button>
                         </div>
                     </form>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </>
     )
-    
+
 }

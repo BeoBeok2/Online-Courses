@@ -7,7 +7,7 @@ type PasswordStrengthIndicatorProps = {
   };
   const PasswordStrengthIndicator = ({ password }: PasswordStrengthIndicatorProps) => {
   const testResult = zxcvbn(password);
-  const strengthLabels = ['Rất yếu', 'Yếu', 'Tạm được', 'Mạnh', 'Rất mạnh'];
+  const strengthLabels = ['Rất yếu', 'Yếu', 'Trung bình', 'Mạnh', 'Rất mạnh'];
   const strengthColorClasses = ['text_red_500', 'text_orange_500', 'text_yellow_500', 'text_green_500', 'text_blue_500'];
 
   return (
