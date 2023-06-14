@@ -4,7 +4,8 @@ import Header from '../../components/footerheader/header';
 import Footer from '../../components/footerheader/footer';
 import Banner from '../../components/footerheader/banner';
 import ModalPolicy from './policy';
-
+import axios from 'axios';
+import host from '@/pages/api/host';
 
 export default function SettingProfile() {
   interface User {
@@ -14,15 +15,33 @@ export default function SettingProfile() {
     email: string;
     phoneNumber: string;
     address: string;
-    avatar: string;
+    avatar: {
+      height: string;
+      url: string;
+      width: string;
+    };
     lastLogin: string;
   }
+
   const [avatar, setAvatar] = useState<File | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [userAvatarUrl, setUserAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userString = sessionStorage.getItem('user');
+    if (userString) {
+      const user: User = JSON.parse(userString);
+      setUserAvatarUrl(user.avatar.url);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setPhoneNumber(user.phoneNumber);
+      setAddress(user.address);
+    }
+  }, []);
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -46,7 +65,7 @@ export default function SettingProfile() {
   };
 
   const handleSaveChanges = () => {
-    // Cập nhật dữ liệu mới vào sessionStorage
+    // Update the user data in sessionStorage
     const userString = sessionStorage.getItem('user');
     if (userString) {
       const user: User = JSON.parse(userString);
@@ -57,36 +76,45 @@ export default function SettingProfile() {
       sessionStorage.setItem('user', JSON.stringify(user));
     }
 
-    // In ra giá trị đã thay đổi
-    console.log('Data has been saved:', {
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
-    });
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append('file', avatar || ''); // Append the avatar file to the form data
+
+    // Get the access token from sessionStorage
+    const accessToken = sessionStorage.getItem('accessToken');
+
+    // Send the request to the server using axios
+    axios({
+      method: 'PATCH',
+      url: `${host}/user/avatar`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${accessToken}`, // Include the access token in the headers
+      }
+    })
+      .then(response => {
+        // Handle the response if needed
+        console.log(response);
+      })
+      .catch(error => {
+        // Handle the error if needed
+        console.log(error);
+      });
   };
-  useEffect(() => {
-    const userString = sessionStorage.getItem('user');
-    if (userString) {
-      const user: User = JSON.parse(userString);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
-      setPhoneNumber(user.phoneNumber);
-      setAddress(user.address);
-    }
-  }, []);
 
   return (
     <>
       <Header />
       <Banner title='Thông tin cá nhân' />
       <div className={Styles.profile_container}>
+        {/* Avatar section */}
         <div className={Styles.avatar_upload}>
           <div className={Styles.avatar_preview}>
             {avatar ? (
               <img src={URL.createObjectURL(avatar)} alt="Avatar" className={Styles.avatar_image} />
             ) : (
-              <img src="/default-avatar.png" alt="Default Avatar" className={Styles.avatar_image} />
+              <img src={userAvatarUrl || '/default-avatar.png'} alt="User Avatar" className={Styles.avatar_image} />
             )}
           </div>
           <label htmlFor="avatar" className={Styles.avatar_change}>
@@ -100,6 +128,8 @@ export default function SettingProfile() {
             className={Styles.avatar_input}
           />
         </div>
+
+        {/* Profile fields */}
         <div className={Styles.profile_field}>
           <div className={Styles.name_fields}>
             <div className={Styles.first_name_field}>
@@ -130,10 +160,16 @@ export default function SettingProfile() {
           <label htmlFor="text">Address:</label>
           <input type="text" id={Styles.website} value={address} onChange={(e) => setAddress(e.target.value)} />
         </div>
+
+        {/* Save Changes button */}
         <button onClick={handleSaveChanges} className={Styles.save_button}>
           Lưu thay đổi
         </button>
+
+        {/* Nâng thành Instructor button */}
         <button onClick={handleModalOpen}>Nâng thành Instructor</button>
+
+        {/* Modal Policy component */}
         {showModal && <ModalPolicy onClose={handleModalClose} onAgree={handleAgree} />}
       </div>
       <Footer />

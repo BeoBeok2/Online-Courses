@@ -11,12 +11,11 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [title, setTitle] = useState('');
-  const [bio, setBio] = useState('');
   const [language, setLanguage] = useState('');
   const [website, setWebsite] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [facebook, setFacebook] = useState('');
+  const [linkedin, setLinkedIn] = useState('');
   const [youtube, setYoutube] = useState('');
+  const [bio, setBio] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -36,8 +35,6 @@ export default function ProfilePage() {
       bio,
       language,
       website,
-      twitter,
-      facebook,
       youtube
     });
   };
@@ -117,17 +114,7 @@ export default function ProfilePage() {
             <label htmlFor="title">Đầu đề:</label>
             <input type="text" id={Styles.title} value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
-          <div className={Styles.profile_field} id={Styles.profile_field1}>
-            <label htmlFor="bio">Tiểu sử:</label>
-            <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
-            {/* <div className={Styles.right_content1}>
-              <div className={Styles.right_text}>
-                <p>Đây là một đoạn văn bản bên phải</p>
-                <p>Đây là đoạn văn bản khác</p>
-                <p>Thêm nhiều đoạn văn bản khác</p>
-              </div>
-            </div> */}
-          </div>
+          
 
           <div className={Styles.profile_field}>
             <label htmlFor="language">Ngôn ngữ:</label>
@@ -137,63 +124,65 @@ export default function ProfilePage() {
             </select>
           </div>
           <div className={Styles.profile_field}>
-            <label htmlFor="website">Trang web:</label>
-            <input type="text" id={Styles.website} value={website} onChange={(e) => setWebsite(e.target.value)} />
-          </div>
+          <label htmlFor="website">Trang web:</label>
+          <input type="text" id={Styles.website} value={website} onChange={(e) => setWebsite(e.target.value)} />
+        </div>
 
-          <div className={Styles.profile_field}>
-            <label htmlFor="twitter">Twitter:</label>
-            <div className={Styles.input_with_addons}>
-              <input
-                type="text"
-                value="https://twitter.com/"
-                disabled
-                className={Styles.link_prefix}
-              />
-              <input
-                type="text"
-                id={Styles.twitter}
-                value={twitter}
-                onChange={(e) => setTwitter(e.target.value)}
-              />
-            </div>
+        <div className={Styles.profile_field}>
+          <label htmlFor="linkedin">LinkedIn:</label>
+          <div className={Styles.input_with_addons}>
+            <input
+              type="text"
+              value="https://linkedin.com/"
+              disabled
+              className={Styles.link_prefix}
+            />
+            <input
+              type="text"
+              id={Styles.linkedin}
+              value={linkedin}
+              onChange={(e) => setLinkedIn(e.target.value)}
+            />
           </div>
+        </div>
 
-          <div className={Styles.profile_field}>
-            <label htmlFor="facebook">Facebook:</label>
-            <div className={Styles.input_with_addons}>
-              <input
-                type="text"
-                value="https://facebook.com/"
-                disabled
-                className={Styles.link_prefix}
-              />
-              <input
-                type="text"
-                id={Styles.facebook}
-                value={facebook}
-                onChange={(e) => setFacebook(e.target.value)}
-              />
-            </div>
-          </div>
+        
 
-          <div className={Styles.profile_field}>
-            <label htmlFor="youtube">YouTube:</label>
-            <div className={Styles.input_with_addons}>
-              <input
-                type="text"
-                value="https://youtube.com/"
-                disabled
-                className={Styles.link_prefix}
-              />
-              <input
-                type="text"
-                id={Styles.youtube}
-                value={youtube}
-                onChange={(e) => setYoutube(e.target.value)}
-              />
-            </div>
+        <div className={Styles.profile_field}>
+          <label htmlFor="youtube">YouTube:</label>
+          <div className={Styles.input_with_addons}>
+            <input
+              type="text"
+              value="https://youtube.com/"
+              disabled
+              className={Styles.link_prefix}
+            />
+            <input
+              type="text"
+              id={Styles.youtube}
+              value={youtube}
+              onChange={(e) => setYoutube(e.target.value)}
+            />
           </div>
+        </div>
+
+        <div className={Styles.profile_field}>
+          <label htmlFor="bio">Bio:</label>
+          <div className={Styles.input_with_addons}>
+            <input
+              type="text"
+              value="https://bio.com/"
+              disabled
+              className={Styles.link_prefix}
+            />
+            <input
+              type="text"
+              id={Styles.bio}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </div>
+        </div>
 
 
           <button onClick={handleSaveChanges} className={Styles.save_button}>Lưu thay đổi</button>

@@ -20,33 +20,7 @@ export default function SuccessLoginPayPal () {
     const closeModal = () => {
         setShowModal(false);
       };
-    // function callapi(){
-    //     if(token != '')
-    //         axios({
-
-    //             method: 'PATCH',
-    //             url: `http://localhost:3000/auth/account/${token}`,
-                
-    //             headers: {
-    //             'Content-Type': 'application/json'
-    //             }
-    //             }).then(response => {
-    //                 console.log('ok');
-    //                 console.log(response.data);
-    //                 setVerify(true);
-                    
-    //             }).catch(error => {
-    //                 console.log('error');
-    //                 console.log(error);
-                    
-    //                 /* router.push('http://localhost:3000/courses/register/successverify'); */
-    //             });
-    // }
     
-    // useEffect(() => {
-    //     callapi();
-        
-    // },[token])  
 
     return(
         
