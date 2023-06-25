@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Styles from '@/styles/addlesson.module.css';
 import VideoUpload from '@/pages/components/instructor/uploadvideo';
 
+import { CircularProgress } from '@material-ui/core';
 
 const CreateCoursePage = () => {
   const [lessonsData, setLessonsData] = useState<{ questions: { question: string; answer: string }[] }[]>([]);
@@ -36,6 +37,7 @@ const CreateCoursePage = () => {
     event.preventDefault();
     console.log(lessonsData);
   };
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className={Styles.container}>
@@ -45,7 +47,6 @@ const CreateCoursePage = () => {
 
       <div className={Styles.form_container}>
         <form onSubmit={displayLessonsData}>
-          
 
           <div id="lessons">
             {lessonsData.map((lesson, lessonIndex) => (
@@ -124,7 +125,7 @@ const CreateCoursePage = () => {
 
           <br />
 
-          <input type="submit" className={Styles.submit_button} value="Thêm các bài học"  id={Styles.button}/>
+          <input type="submit" className={Styles.submit_button} value="Save"  id={Styles.button}/>
         </form>
       </div>
     </div>
