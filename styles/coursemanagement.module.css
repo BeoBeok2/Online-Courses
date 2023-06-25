@@ -52,8 +52,31 @@
     padding: 20px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
 }
+.text_hover {
+    font-size: 25px;
+    position: absolute;
+    top: 45%;
+    right: 40%;
+    transition: .2s;
+    opacity: 0;
+}
+.course_card:hover .text_hover {
+    transition: .5s;
+    opacity: 1;
 
+}
+.cover_hover {
+    opacity: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+.course_card:hover .cover_hover {
+    opacity: .5;
+}
 .course_card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -64,12 +87,10 @@
 
 .course_card h3 {
     margin: 0;
-    transition: color 0.3s ease;
 }
 
 .course_card p {
     margin: 0;
-    transition: color 0.3s ease;
 }
 
 .course_card .completion {
@@ -95,6 +116,8 @@
     color: #000;
     border: none;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 #edit_button:hover {

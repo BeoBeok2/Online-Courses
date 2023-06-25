@@ -165,7 +165,7 @@ export default function ListCourses() {
                                         <div className={Styles.courseslist_metadata_holder}>
                                             {/* <div className={Styles.courseslist_author_image}>
                                                 <a href="#">
-                                                    <img
+                                                   <img
                                                         src={course.imageUrl}
                                                         alt=""
                                                         className="avatar"

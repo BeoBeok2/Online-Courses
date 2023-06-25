@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, CancelTokenSource } from 'axios';
-
+import host from '@/pages/api/host';
 interface VideoUploadProps {
   lessonIndex: number;
 }
@@ -19,6 +19,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ lessonIndex }) => {
 
       let formData = new FormData();
       formData.append('file', file);
+      formData.append('folder', "video")
 
       if (cancelToken) {
         cancelToken.cancel('Upload canceled by user');
@@ -29,13 +30,17 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ lessonIndex }) => {
       setIsUploading(true);
       setUploadProgress(0);
       setShowCancelButton(true);
-
+      let accessToken: string | null = null;
+      if (typeof window !== 'undefined') {
+        accessToken = localStorage.getItem('accessToken');
+    }
       const config: AxiosRequestConfig = {
         method: 'POST',
-        url: 'https://jsonplaceholder.typicode.com/posts', // Example API endpoint
+        url: `${host}/file/asset`, // Example API endpoint
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`
         },
         onUploadProgress: (progressEvent) => {
           const progress = Math.round((progressEvent.loaded / (progressEvent.total ?? 0)) * 100);
@@ -88,6 +93,7 @@ const VideoUpload: React.FC<VideoUploadProps> = ({ lessonIndex }) => {
         key={fileInputKey}
         onClick={handleFileInputClick}
         onChange={handleVideoUpload}
+        accept="video/*"
       />
       {isUploading && (
         <div>
