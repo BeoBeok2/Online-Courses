@@ -54,15 +54,35 @@ export default function Header() {
     return (
         <>
             {/* Các thẻ meta, link và script */}
-            <header>
+            <header >
                 <div className={Styles.container} id={Styles.container_header} >
-                    <div className={Styles.above_nav}>
-                        <ul className={Styles.social_medial}>
-                            <li><i className="fa-solid fa-g"></i></li>
-                            <li><i id={Styles.fa_brands} className="fa-brands fa-facebook-f"></i></li>
-                            <li><i id={Styles.fa_brands} className="fa-brands fa-twitter"></i></li>
-                            <li><i id={Styles.fa_brands} className="fa-brands fa-youtube"></i></li>
+                  
+                    <div className={Styles.under_nav}>
+                        <img className={Styles.logo} width={150} height={45} src="../../../images/logo1.png" alt="" />
+                        <ul className={Styles.list_nav}>
+                            <li>
+                                <a href="http://localhost:8080">Home</a>
+                            
+                            </li>
+                          
+                          
+                            <li>
+                                <a href="http://localhost:8080/listcourses">Courses</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>
                         </ul>
+                        <div className="Search_box">
+                            <nav className="navbar bg-body-tertiary">
+                                <div className="container-fluid">
+                                    <form className="d-flex" role="search">
+                                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                        <button className="btn btn-outline-success" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </nav>
+                        </div>
                         <div className={Styles.account}>
                             <div className={Styles.login}>
                                 {loggedIn ? (
@@ -95,83 +115,9 @@ export default function Header() {
                             </div>
                         </div>
                     </div>
-                    <div className={Styles.under_nav}>
-                        <img className={Styles.logo} width={150} height={45} src="../../../images/logo1.png" alt="" />
-                        <ul className={Styles.list_nav}>
-                            <li>
-                                <a href="http://localhost:8080">Home</a>
-                                {/* <ul className={Styles.sub_menu}>
-                                    <li>
-                                        <a href="#!">Home II</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!">Blog</a>
-                                    </li>
-                                    <li>
-                                        <a id={Styles.Portfolio} href="#!">Portfolio</a>
-                                        <ul className={Styles.sub_menu}>
-                                            <li>
-                                                <a href="#!">Set I</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">Set II</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">Set III</a>
-                                            </li>
-                                            <li>
-                                                <a id={Styles.Portfolio} href="#!">Set IV</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul> */}
-                            </li>
-                            <li>
-                                <a href="#!">About</a>
-                                <ul className={Styles.sub_menu}>
-                                    <li>
-                                        <a id={Styles.Portfolio} href="#!">Shop</a>
-                                        <ul className="sub-menu">
-                                            <li>
-                                                <a href="http://localhost:8080/listcourses">Shop Courses</a>
-                                            </li>
-                                            <li>
-                                                <a id={Styles.Portfolio} href="#">Contact</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            {/* <li>
-                                <a href="#!">Services</a>
-                            </li>
-                            <li>
-                                <a href="#!">Students</a>
-                            </li>
-                            <li>
-                                <a href="#!">Why Us</a>
-                            </li> */}
-                            <li>
-                                <a href="http://localhost:8080/listcourses">Courses</a>
-                            </li>
-                            <li>
-                                <a href="#">Contact</a>
-                            </li>
-                        </ul>
-                        <div className="Search_box">
-                            <nav className="navbar bg-body-tertiary">
-                                <div className="container-fluid">
-                                    <form className="d-flex" role="search">
-                                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                        <button className="btn btn-outline-success" type="submit">Search</button>
-                                    </form>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
                 </div>
             </header>
-            {showModal && (
+         {showModal && (
                 <div className={Styles.modalOverlay}>
                     <div className={Styles.modalContent}>
                         {/* Nội dung của trang login sẽ được đặt ở đây */}
