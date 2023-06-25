@@ -6,27 +6,51 @@ import Header from '../../components/footerheader/header';
 import Banner from '../../components/footerheader/banner';
 import Footer from '../../components/footerheader/footer';
 import Login from '../../login';
+import host from '@/pages/api/host';
 
-export default function SuccessLoginPayPal () {
-    const [isVeify, setVerify] = useState(false)
-    const [isToken, setToken] = useState(null)
-    const router = useRouter()
-    const { token = "" } = router.query;
+export default function SuccessLoginPayPal() {
+    const [isVeify, setVerify] = useState(false);
+    const [isToken, setToken] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    
+    const router = useRouter();
+
+    useEffect(() => {
+        const { code = "" } = router.query;
+
+        if (code) {
+            const apiUrl = `${host}/payment/account`;
+
+            // Gửi mã code dưới dạng token trong body của request
+            const data = {
+                token: code
+            };
+
+            axios
+                .post(apiUrl, data)
+                .then(response => {
+                    console.log(response.data);
+                    // Xử lý response thành công
+                })
+                .catch(error => {
+                    console.error(error);
+                    // Xử lý lỗi khi gọi API
+                });
+        }
+    }, []);
+
     const handleOpenModal = () => {
         setShowModal(true);
     };
+
     const closeModal = () => {
         setShowModal(false);
-      };
-    
+    };
 
-    return(
-        
+    return (
+
         <>
-            <Header/>
-            <Banner title=''/>
+            <Header />
+            <Banner title='' />
             <div className={Styles.password_reset}>
                 <div className={Styles.user_form}>
                     <div className={Styles.user_form_title}>
@@ -37,8 +61,8 @@ export default function SuccessLoginPayPal () {
                     </div>
                 </div>
             </div>
-            
-            <Footer/>
+
+            <Footer />
             {showModal && (
                 <div className={Styles.modalOverlay}>
                     <div className={Styles.modalContent}>
@@ -46,7 +70,7 @@ export default function SuccessLoginPayPal () {
                         {/* Ví dụ: */}
                         <Login />
                         <div className={Styles.closeButton} onClick={closeModal}>
-                          <img src="../../../images/close.png" alt="close" width={30} height={30} />
+                            <img src="../../../images/close.png" alt="close" width={30} height={30} />
                         </div>
                     </div>
                 </div>

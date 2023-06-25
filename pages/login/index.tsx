@@ -35,10 +35,12 @@ export default function Login() {
     })
       .then((res) => {
         const accessToken = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
         const user = res.data.information as User[];
   
-        sessionStorage.setItem('accessToken', accessToken);
-        sessionStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('user', JSON.stringify(user));
   
         router.push('http://localhost:8080').then(() => {
           window.location.reload();
@@ -50,12 +52,71 @@ export default function Login() {
       });
   };
   
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    // Thực hiện các công việc khác liên quan đến đăng xuất
+  };
 
   useEffect(() => {
     const rememberMe = localStorage.getItem('rememberMe');
     if (rememberMe === 'true') {
-      setRememberMe(true);
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        // Thực hiện các xử lý khác liên quan đến đăng nhập tự động
+      }
     }
+  }, []);
+
+  useEffect(() => {
+    // Kiểm tra trạng thái của mỗi request trước khi gửi đi
+    axios.interceptors.request.use(
+      (config) => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    // Kiểm tra trạng thái của mỗi response sau khi nhận được
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        const originalRequest = error.config;
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (
+          refreshToken &&
+          error.response.status === 401 &&
+          !originalRequest._retry
+        ) {
+          originalRequest._retry = true;
+          return axios
+            .post(`${host}/auth/token`, { refreshToken })
+            .then((res) => {
+              if (res.status === 200) {
+                const newAccessToken = res.data.accessToken;
+                localStorage.setItem('accessToken', newAccessToken);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+                return axios(originalRequest);
+              }
+            })
+            .catch((error) => {
+              console.log('error refreshing access token:', error);
+              handleLogout(); // Xóa tất cả thông tin liên quan đến đăng nhập
+            });
+        }
+        return Promise.reject(error);
+      }
+    );
   }, []);
 
   return (

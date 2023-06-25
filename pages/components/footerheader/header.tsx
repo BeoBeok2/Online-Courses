@@ -1,5 +1,4 @@
 import Styles from '@/styles/footer.module.css';
-import { ST } from 'next/dist/shared/lib/utils';
 import { useEffect, useState } from 'react';
 import { FaCog } from 'react-icons/fa';
 import { FaFontAwesome } from 'react-icons/fa';
@@ -12,7 +11,7 @@ export default function Header() {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleLogin = (email: string) => {
-        // handle login logic
+        // Xử lý logic đăng nhập
     };
 
     const handleOpenModal = () => {
@@ -20,15 +19,16 @@ export default function Header() {
     };
 
     const handleLogout = () => {
-        // Xóa access token và người dùng khỏi sessionStorage
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('user');
+        // Xóa accessToken và user khỏi localStorage
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
       
         // Đặt trạng thái đăng nhập thành false
         setLoggedIn(false);
       
         // Thực hiện các bước khác sau khi đăng xuất (ví dụ: điều hướng tới trang chủ, hiển thị thông báo, vv.)
-      };
+    };
 
     const closeModal = () => {
         setShowModal(false);
@@ -43,43 +43,17 @@ export default function Header() {
     };
 
     useEffect(() => {
-        const user = sessionStorage.getItem('user');
+        const user = localStorage.getItem('user');
         if (user) {
             const userData = JSON.parse(user);
             setUserAvatar(userData.avatar.url);
             setLoggedIn(true);
         }
     }, []);
+
     return (
         <>
-
-            <meta charSet="UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-            <link
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-                rel="stylesheet"
-                integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-                crossOrigin="anonymous"
-            />
-            <script
-                src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossOrigin="anonymous"
-            ></script>
-
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-            />
-
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='' />
-            <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Lato:wght@700&family=Montserrat:ital,wght@0,500;1,300&family=Poppins:wght@400;600;700&family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@700&display=swap" rel="stylesheet"></link>
-
-
+            {/* Các thẻ meta, link và script */}
             <header>
                 <div className={Styles.container} id={Styles.container_header} >
                     <div className={Styles.above_nav}>
@@ -95,15 +69,11 @@ export default function Header() {
                                     <div className={Styles.avatar_container}>
                                         <img src={userAvatar} alt="Avatar" className={Styles.avatar} />
                                         <div className={Styles.menu}>
-                                            
                                             <a href="http://localhost:8080/user/profile">Thông tin cá nhân</a>
                                             <a href="http://localhost:8080/instructor">Instructor</a>
-                                            <a href="#" onClick={handleLogout}>Logout</a>
+                                            <a href="" onClick={handleLogout}>Logout</a>
                                         </div>
-
                                     </div>
-
-
                                 ) : (
                                     <div>
                                         <a
@@ -198,7 +168,6 @@ export default function Header() {
                             </nav>
                         </div>
                     </div>
-
                 </div>
             </header>
             {showModal && (
@@ -213,8 +182,6 @@ export default function Header() {
                     </div>
                 </div>
             )}
-
-
         </>
     );
 };

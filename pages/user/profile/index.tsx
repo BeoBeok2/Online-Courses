@@ -8,39 +8,35 @@ import axios from 'axios';
 import host from '@/pages/api/host';
 
 export default function SettingProfile() {
-  interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    address: string;
-    avatar: {
-      height: string;
-      url: string;
-      width: string;
-    };
-    lastLogin: string;
-  }
-
   const [avatar, setAvatar] = useState<File | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [userAvatarUrl, setUserAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const userString = sessionStorage.getItem('user');
-    if (userString) {
-      const user: User = JSON.parse(userString);
-      setUserAvatarUrl(user.avatar.url);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
-      setPhoneNumber(user.phoneNumber);
-      setAddress(user.address);
-    }
+    const accessToken = localStorage.getItem('accessToken');
+    axios({
+      method: 'GET',
+      url: `${host}/user/profile`,
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      }
+    })
+      .then(response => {
+        const { data } = response;
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setPhoneNumber(data.phoneNumber);
+        setAddress(data.address);
+        // Assuming avatar object has 'url', 'width', and 'height' properties in the response
+        setAvatar(data.avt.url);
+      })
+      .catch(error => {
+        // Handle the error if needed
+        console.log(error);
+      });
   }, []);
 
   const handleModalOpen = () => {
@@ -65,32 +61,18 @@ export default function SettingProfile() {
   };
 
   const handleSaveChanges = () => {
-    // Update the user data in sessionStorage
-    const userString = sessionStorage.getItem('user');
-    if (userString) {
-      const user: User = JSON.parse(userString);
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.phoneNumber = phoneNumber;
-      user.address = address;
-      sessionStorage.setItem('user', JSON.stringify(user));
-    }
-
-    // Create a new FormData object
     const formData = new FormData();
-    formData.append('file', avatar || ''); // Append the avatar file to the form data
+    formData.append('file', avatar || '');
 
-    // Get the access token from sessionStorage
-    const accessToken = sessionStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
 
-    // Send the request to the server using axios
     axios({
       method: 'PATCH',
       url: `${host}/user/avatar`,
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${accessToken}`, // Include the access token in the headers
+        'Authorization': `Bearer ${accessToken}`,
       }
     })
       .then(response => {
@@ -114,7 +96,7 @@ export default function SettingProfile() {
             {avatar ? (
               <img src={URL.createObjectURL(avatar)} alt="Avatar" className={Styles.avatar_image} />
             ) : (
-              <img src={userAvatarUrl || '/default-avatar.png'} alt="User Avatar" className={Styles.avatar_image} />
+              <img src={avatar || '/default-avatar.png'} alt="User Avatar" className={Styles.avatar_image} />
             )}
           </div>
           <label htmlFor="avatar" className={Styles.avatar_change}>
