@@ -55,13 +55,12 @@ export default function Register() {
                 setLastName('');
                 setPhoneNumber('');
                 setAddress('');
-                
                 alert('Bạn cần vào email để xác minh verify!');
+                router.push('http://localhost:8080');
             }).catch(error => {
                 setIsLoading(false);
                 alert(error.response.data.message);
             });
-            router.push('http://localhost:8080');
         } else {
             alert('Mật khẩu chưa đủ an toàn. Vui lòng chọn một mật khẩu khác!');
         }

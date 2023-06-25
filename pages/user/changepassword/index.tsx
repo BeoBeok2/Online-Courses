@@ -4,6 +4,9 @@ import PasswordStrengthIndicator from '../../components/user/PasswordStrengthInd
 import Header from '../../components/footerheader/header';
 import Footer from '../../components/footerheader/footer';
 import Banner from '../../components/footerheader/banner';
+import axios from 'axios';
+import host from '@/pages/api/host';
+import router, { useRouter } from 'next/router';
 
 
 export default function ChangePassword(){
@@ -12,19 +15,30 @@ export default function ChangePassword(){
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState("");
+    const router = useRouter();
+    const { token } = router.query; 
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
+        console.log(token)
         event.preventDefault();
+
         if (password !== confirmPassword) {
             setError(`Mật khẩu không khớp nhau`);
         } 
         else {
-            // perform password change action here
+            axios.put(`${host}/user/password/${token}`, {
+                "NewPassword": confirmPassword, 
+        }).then(result => {
             alert(`Đổi mật khẩu thành công!`)
             console.log(`Email: ${password}`);
             setPassword('');
             setConfirmPassword('');
             setError('');
+            console.log(result)
+            router.push('http://localhost:8080/');
+
+        }).catch(err => alert(err.response.data.message))
+         
         }
     };
 
