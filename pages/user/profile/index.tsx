@@ -28,7 +28,7 @@ export default function SettingProfile() {
         const { data } = response;
         setFirstName(data.firstName);
         setLastName(data.lastName);
-        setPhone(data.phone);
+        setPhone(data.phoneNumber);
         setAddress(data.address);
         setAvatar(data.avt.url);
       })
@@ -89,7 +89,7 @@ export default function SettingProfile() {
     const data = {
       firstName: firstName,
       lastName: lastName,
-      phone: phone,
+      phoneNumber: phone,
       address: address,
     };
 

@@ -26,11 +26,11 @@ export default function ForgotPassword () {
     const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
      
-        axios.post(`${host}/auth/password`, {
+        axios.post(`${host}/auth/account`, {
                 "email": email, 
         }).then(result => {
             console.log(result)
-        router.push('http://localhost:8080/forgotpassword/resultforgotpassword');
+        router.push('http://localhost:8080/verify/success');
 
         }).catch(err => console.log(err))
         
@@ -38,11 +38,11 @@ export default function ForgotPassword () {
     return(
         <>
             <Header/>
-            <Banner title='Forgot password'/>
+            <Banner title='Verify Account'/>
             <div className={Styles.password_reset}>
                 <div className={Styles.user_form}>
                     <div className={Styles.user_form_title}>
-                        Enter your email to set new password
+                        Enter your email to verify account
                     </div>
                     <div className={Styles.user_form_info}>
                         We'll email you a link to reset it.

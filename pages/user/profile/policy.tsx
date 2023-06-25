@@ -137,7 +137,6 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
             </div>
             
             <div className={Styles.profile_field}>
-              <label htmlFor="linkedin">LinkedIn:</label>
               <div className={Styles.input_with_addons}>
                 <input
                   type="text"
@@ -155,7 +154,6 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
             </div>
 
             <div className={Styles.profile_field}>
-              <label htmlFor="youtube">YouTube:</label>
               <div className={Styles.input_with_addons}>
                 <input
                   type="text"
@@ -173,7 +171,6 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
             </div>
 
             <div className={Styles.profile_field}>
-              <label htmlFor="bio">Bio:</label>
               <div className={Styles.input_with_addons}>
                 <input
                   type="text"

@@ -160,7 +160,7 @@ export default function ListCourses() {
                                         </div>
                                         </h5>
                                         <div className={Styles.courseslist_description}>
-                                            {truncateDescription(course.description, 100)}
+                                            {truncateDescription(course.description, 50)}
                                         </div>
                                         <div className={Styles.courseslist_metadata_holder}>
                                             {/* <div className={Styles.courseslist_author_image}>
@@ -176,14 +176,14 @@ export default function ListCourses() {
                                                     />
                                                 </a>
                                             </div> */}
-                                            <div className={Styles.courseslist_author_description}>
+                                            {/* <div className={Styles.courseslist_author_description}>
                                                 <p>
                                                     <a href="#" rel="author">
                                                         Hoàng Phúc
                                                     </a>
                                                     <span></span>
                                                 </p>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         
                                         <div data-index-course={index} onClick={handleAddToCart} className={Styles.btn}>Add to Cart</div>

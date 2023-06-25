@@ -6,11 +6,8 @@
 }
 .list_courses_container{
     position: relative;
-    float: left;
     margin: 0;
     padding: 0;
-    width: 1000px;
-    clear: both;
     
     
 }
@@ -32,11 +29,12 @@
     border: 0;
     font-size: 100%;
     margin: 0;
-    height: 300px;
+    height: 250px;
     outline: 0;
     padding: 0;
     vertical-align: baseline;
     width: 100%;
+    object-fit: cover;
 }
 .list_courses_container span{
     border: 0;
@@ -57,7 +55,7 @@
 .list_courses_container a{
     background: transparent;
     border: 0;
-    font-size: 100%;
+    font-size: 20px;
     margin: 0;
     outline: 0;
     padding: 0;
@@ -66,13 +64,17 @@
     display: flex;
 }
 .list_courses_items{
-    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 20px;
+    padding: 0 30px;
+    /* position: relative;
     height: 933.437px;
     clear: both;
     display: block;
     margin: 0 -15px;
     width: auto;
-    display: block;
+    display: block; */
     /* display: grid;
     grid-template-columns: repeat(2, 1fr); */
 }
@@ -84,7 +86,7 @@
     border-radius: 10px;
     margin: 0 15px 30px 0;
     clear: none;
-    width: 47%;
+    width: 100%;
     float: left;
     min-height: 1px;
 }
@@ -141,13 +143,14 @@
     font-size: 11px;
     text-transform: uppercase;
     border-radius: 3px;
-    padding: 8px 12px 6px 26px;
+    padding: 5px;
     line-height: normal;
     font-weight: 300;
     float: left;
     margin-right: 15px;
     color: #000;
     margin-bottom: 5px;
+    font-size: 10px;
 }
     .courseslisting_featured .courseslisting_featured_text{
         line-height: 0px;
@@ -174,7 +177,7 @@
         padding-bottom: 15px;
         font-size: 23px;
         clear: both;
-        margin: 10px 0 20px;
+        margin: 10px 0 10px;
         line-height: normal;
         width: 100%;
     }
@@ -189,7 +192,7 @@
     margin-bottom: 20px;
     color: #474747;
     float: left;
-    margin: 0 0 35px;
+    margin: 0 0 15px;
     width: 100%;
 }
 .courseslist_metadata_holder{
@@ -251,7 +254,6 @@
         position: static;
     }
 .coursesdetails_price{
-    float: right;
     margin: 15px 0 0;
 }
 .price_status{
@@ -412,13 +414,13 @@
 .btn {
     margin: 0px auto;
     float: right;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     color: aliceblue;
     font-family: var(--font-heading);
     display: flex;
     width: 200px;
     justify-content: space-around;
-    padding: 20px 20px;
+    padding: 15px 15px;
     background: linear-gradient(to right, rgb(0, 237, 164), rgb(106, 125, 241));
     border-radius: 30px 10px 10px;
     cursor: pointer;
