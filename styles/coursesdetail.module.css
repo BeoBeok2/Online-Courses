@@ -719,6 +719,7 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 50px;
+    height: 700px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
@@ -748,7 +749,9 @@
     font-weight: bold;
     
   }
-  
+  #activeLecture_title{
+    display: inline-block;
+  }
   .dtlmsCourseCurriculumPopupHeader img {
     width: 20px;
     height: 20px;
@@ -1009,8 +1012,15 @@
   .dtlmsToggle img{
     float: right;
   }
-  
+  .modalContent {
+    height: 700px; /* Set the desired height for the modal container */
+    overflow-y: scroll; /* Add a vertical scroll bar when the content exceeds the container height */
+  }
   .dtlmsToggle .active {
     transform: rotate(180deg);
   }
-  
+  #video_modal{
+    width: 1100px !important;
+    height: 600px !important;
+    margin-left: 100px;
+  }

@@ -215,13 +215,7 @@ export default function ListCourses() {
                         >
                             2
                         </button>
-                        <button
-                            className={Styles.page_numbers}
-                            onClick={() => router.push(`/listcourses?page=${3}`)}
-                            disabled={currentpage === 3}
-                        >
-                            3
-                        </button>
+                        
                         {nextPage && (
                             <button onClick={() => router.push(`/listcourses?page=${nextPage}`)}>Next</button>
                         )}

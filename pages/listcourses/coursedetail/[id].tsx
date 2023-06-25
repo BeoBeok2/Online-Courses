@@ -11,6 +11,28 @@ import host from '@/pages/api/host';
 import { useRouter } from 'next/router';
 import VideoPlayer from '@/pages/components/course/videoplayer';
 
+interface RelatedCourse {
+  id: string;
+  title: string;
+  requirement: string;
+  level: string;
+  description: string;
+  language: string;
+  price: {
+    value: string;
+    currency: string;
+  };
+  NumReviews: string;
+  AvgRating: string;
+  thumbnail: {
+    url: string;
+    width: string;
+    height: string;
+  };
+  instructor: {
+    id: string;
+  };
+}
 
 interface Lecture {
   id: string;
@@ -68,7 +90,7 @@ interface Course {
   instructor: Instructor;
 }
 
-const CourseDetail: React.FC = () =>  {
+const CourseDetail: React.FC = () => {
   // const [showModal, setShowModal] = useState(false);
   // const [videoSource, setVideoSource] = useState('');
 
@@ -82,6 +104,7 @@ const CourseDetail: React.FC = () =>  {
   //   setShowModal(false);
   // };
   // const videoIde = '3lwpE5x_DCI';
+  const [relatedcourses, setRelatedCourses] = useState<RelatedCourse[]>([]);
   const [course, setCourse] = useState<Course | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [videoId, setVideoId] = useState('');
@@ -130,6 +153,29 @@ const CourseDetail: React.FC = () =>  {
       callAPI(id);
     }
   }, [id]);
+  const loadRelatedCourses = () => {
+    axios
+      .get(`${host}/courses?pageSize=3&page=1`)
+      .then((response) => {
+        const relatedcourses = response.data.courses as RelatedCourse[];
+        setRelatedCourses(relatedcourses);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (course) {
+      loadRelatedCourses();
+    }
+  }, [course]);
+  function truncateDescription(description: string, maxLength: number) {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return `${description.substr(0, maxLength)}...`;
+  }
   // const toggleMenu = () => {
   //   setShowMenu(!showMenu);
   // };
@@ -155,6 +201,37 @@ const CourseDetail: React.FC = () =>  {
   //     setShowModal(true);
   //   }, 100);
   // };
+  let accessToken: string | null = null;
+  if (typeof window !== 'undefined') {
+    accessToken = localStorage.getItem('accessToken');
+}
+const handleAddToCart = () => {
+  axios
+    .post(
+      'http://localhost:3000/cart',
+      {
+        courseId: course?.id, // courseId của khóa học được truyền vào từ props hoặc trạng thái của trang chi tiết khóa học
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+    .then((result) => {
+      console.log(result);
+      // Xử lý thành công - ví dụ: hiển thị thông báo, cập nhật trạng thái, vv.
+    })
+    .catch((err) => {
+      console.log(err);
+      // Xử lý lỗi - ví dụ: hiển thị thông báo lỗi, vv.
+    });
+};
+
+
+  if (!course) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -222,7 +299,7 @@ const CourseDetail: React.FC = () =>  {
                 </div>
               </div>
               <div className={Styles.right_content}>
-                <div className={Styles.btn_cart}>
+                <div className={Styles.btn_cart} onClick={() => handleAddToCart()}>
                   <i className="fa-solid fa-cart-shopping"></i>
                   Add to Cart
                 </div>
@@ -243,7 +320,7 @@ const CourseDetail: React.FC = () =>  {
           {course && (
             <div className={Styles.container}>
               <span className={Styles.title_info}>Curriculum</span>
-              {course.sections.map((section) => (
+              {course && course.sections && course.sections.map((section) => (
                 <div key={section.id} className={Styles.body}>
                   <h1
                     className={Styles.title_sub}
@@ -270,79 +347,70 @@ const CourseDetail: React.FC = () =>  {
                 <div className={Styles.modal}>
                   <div className={Styles.modalContent}>
                     <div id={Styles.dtlms_course_curriculum_popup} className={Styles.dtlmsCourseCurriculumPopup + ' ' + Styles.dtlmsCourseCurriculumPopupQuiz}>
-                      <h2>{activeLecture.title}</h2>
+                      <h2 id={Styles.activeLecture_title}>{activeLecture.title}</h2>
                       <div className={Styles.dtlmsCloseCourseCurriculumPopup} onClick={closeModal}>
-                          <img src="../../../../images/close.png" alt="close" width={30} height={30} />
-                        </div>
+                        <img src="../../../../images/close.png" alt="close" width={30} height={30} />
+                      </div>
                       <div className={Styles.dtlmsCourseCurriculumPopupHeader}>
-                        
-                        
-                        <p>{activeLecture.content}</p>
-                        <VideoPlayer videoUrl="https://courses-storages.s3.ap-northeast-1.amazonaws.com/video/Golang+installation+and+hello+world+18.00.55.mp4" />
+
+
+                        {/* <p>{activeLecture.content}</p> */}
+                        <VideoPlayer videoUrl={activeLecture.video} />
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* {showModal && (
-                <div className={Styles.modal}>
-                  <div className={Styles.modalContent}>
-                    <div id={Styles.dtlms_course_curriculum_popup} className={Styles.dtlmsCourseCurriculumPopup + ' ' + Styles.dtlmsCourseCurriculumPopupQuiz}>
-                      <div className={Styles.dtlmsCourseCurriculumPopupHeader}>
-                        <h2>{course.sections[0].lectures[0].title} ({course.sections[0].lectures[0].duration})</h2>
-                        
-                        <div className={Styles.dtlmsRefreshCourseCurriculum} onClick={refreshModal}>
-                          <img src="../../../../images/refresh.png" alt="refresh" width={30} height={30} />
-                        </div>
-                        <div className={Styles.dtlmsCloseCourseCurriculumPopup} onClick={closeModal}>
-                          <img src="../../../../images/close.png" alt="close" width={30} height={30} />
-                        </div>
-                      </div>
 
-                      <div className={Styles.body_modal}>
-                        <div className={Styles.dtlmsColumn + ' ' + Styles.dtlmsOneFifth + ' ' + Styles.first}>
-                          <h5 className={Styles.dtlmsToggle + ' ' + Styles.active} onClick={toggleMenu}>
-                            <a href="#">Lesson</a>
-                            <img src="../../../../images/menu.png" alt="menu" width={30} height={30} />
-                          </h5>
-                          <div className={Styles.dtlmsToggleContent} style={{ display: 'block' }}>
-                            {showMenu && (
-                              <ul className={Styles.dtlmsCurriculumList}>
-                                {course.sections[0].lectures.map((lecture) => (
-                                  <React.Fragment key={lecture.id}>
-                                    <ul className={Styles.des_sub} id={Styles.fix_lesson} onClick={() => openModal(lecture.videoId)}>
-                                      <li>{lecture.title}</li>
-                                      <li><i className="fa-solid fa-clock" id={Styles.fa_clock}> {lecture.duration}</i></li>
-                                    </ul>
-                                    <hr />
-                                  </React.Fragment>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className={Styles.dtlmsColumn + ' ' + Styles.dtlmsFourFifth}>
-                          <div className={` ${Styles.scrollable}`} >
-                            <div className={Styles.videoWrapper}>
-                              
-                            </div>
-                            <p>{course.sections[0].lectures[0].content}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-              )} */}
 
 
 
             </div>
           )}
         </div>
+        <div className={Styles.author}>
+          <div className={Styles.container}>
+            <div className={Styles.block}>
+              <div className={Styles.top_content}>
+                <h1 className={Styles.title}>Related Courses</h1>
+                <span className={Styles.des}>COURSES YOU MIGHT BE INTERESTED IN</span>
+              </div>
+            </div>
+            <div className={Styles.bot_content}>
+              {relatedcourses.map((relatedCourse) => (
+                <div className={Styles.course_item} key={relatedCourse.id}>
+                  <a href={`http://localhost:8080/listcourses/coursedetail/${relatedCourse.id}`}><img src={relatedCourse.thumbnail.url} alt="" /></a>
+                  <div className={Styles.info}>
+                  <div className={Styles.author_sub}>
+                      <span className={Styles.avatar}>
+                        <div>
+                          <span className={Styles.price}>
+                            {course.price.value} {course.price.currency}
+                            
+                          </span>
+                        </div>
+                      </span>
+                    </div>
+                    <div className={Styles.stamp}>
+                      <i className="fa-sharp fa-solid fa-star"></i> <span>{relatedCourse.level}</span>
+                    </div>
+                    
+                    <p className={Styles.sub}>{relatedCourse.title}</p>
+                    
+                    <span className={Styles.des}>{truncateDescription(relatedCourse.description, 100)}</span>
+                    <p className={Styles.des_sub}>
+                      {relatedCourse.requirement}
+                    </p>
+
+                    <div className={Styles.btn}>Add to Cart</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
 
         <Review />
         <TopFooter />

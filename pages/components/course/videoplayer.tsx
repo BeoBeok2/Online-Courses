@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactPlayer from 'react-player';
+import Styles from '@/styles/coursesdetail.module.css';
 
 interface VideoProps {
   videoUrl: string;
@@ -7,8 +8,8 @@ interface VideoProps {
 
 const VideoPlayer: React.FC<VideoProps> = ({ videoUrl }) => {
   return (
-    <div>
-      <ReactPlayer url={videoUrl} controls={true} />
+    <div >
+      <ReactPlayer  id={Styles.video_modal} style={{ height: '400px', width: '700px' }} url={videoUrl} controls={true} />
     </div>
   );
 };
