@@ -84,13 +84,13 @@ export default function Home() {
   }
 
   useEffect(() => {
-    callAPI(3, currentPage);
+    // callAPI(3, currentPage);
     setIsLoading(false);
     return () => {
       // cleanup function to prevent state update on unmounted component
       isMounted = false;
     };
-  }, [currentPage]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;

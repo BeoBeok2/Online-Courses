@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Styles from '@/styles/policy.module.css';
 import PayPalButton from '@/pages/components/instructor/PayPalButton';
+import host from '@/pages/api/host';
 
 interface Policies {
   policy1: boolean;
@@ -37,7 +39,43 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
     const allChecked = Object.values(policies).every((value) => value === true);
 
     if (allChecked) {
-      onAgree(); // Call onAgree when all conditions are met
+      const accessToken = localStorage.getItem('accessToken'); // Lấy access token từ localStorage
+
+      const data = {
+        Website: website,
+        Linkedin: `https://linkedin.com/${linkedin}`,
+        Youtube: `https://youtube.com/${youtube}`,
+        Bio: `https://bio.com/${bio}`,
+      };
+      console.log(data);
+      axios({
+        method: 'POST',
+        url: `${host}/instructor/`,
+        data: data,
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      })
+
+        .then((response) => {
+          // Xử lý phản hồi thành công từ API tại đây
+          // Ví dụ: hiển thị thông báo thành công, chuyển hướng trang, cập nhật trạng thái, vv.
+          console.log(response.data);
+          alert("Bạn đã nâng thành công thành Instructor, hãy nhấn Ok để chuyển tới trang Instructor");
+            
+          window.location.href = "http://localhost:8080/instructor";
+          onAgree(); // Gọi onAgree khi gọi API thành công
+        })
+        .catch((error) => {
+          // Xử lý lỗi từ API tại đây
+          // Ví dụ: hiển thị thông báo lỗi, ghi log, vv.
+          console.error(error);
+          if (error.response || error.response.status === 400 || error.response.data === "can not create instructor") {
+            alert("Không thể tạo nâng cấp thành Instructor. Có thể bạn đã nâng lên Instructor rồi, hãy nhấn Ok để chuyển tới trang Instructor");
+            
+            window.location.href = "http://localhost:8080/instructor";
+          }
+        });
     } else {
       alert('Vui lòng đồng ý với tất cả các chính sách.');
     }
@@ -89,19 +127,15 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
             </label>
           </div>
           <div className={Styles.form_profile}>
-          <h2 >Những thông tin cần thiết</h2>
+            <h2>Những thông tin cần thiết</h2>
           </div>
-          
-          <div className={Styles.container_profile}>
-            
+
+          <div >
             <div className={Styles.profile_field}>
               <label htmlFor="website">Trang web:</label>
               <input type="text" id={Styles.website} className={Styles.website} value={website} onChange={(e) => setWebsite(e.target.value)} />
             </div>
-            <div className={Styles.payment}>
-              <p>Vui lòng đăng nhập tài khoản PayPal</p>
-              <PayPalButton />
-            </div>
+            
             <div className={Styles.profile_field}>
               <label htmlFor="linkedin">LinkedIn:</label>
               <div className={Styles.input_with_addons}>
@@ -119,8 +153,6 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
                 />
               </div>
             </div>
-
-
 
             <div className={Styles.profile_field}>
               <label htmlFor="youtube">YouTube:</label>
@@ -157,16 +189,13 @@ export default function ModalPolicy({ onClose, onAgree }: ModalProps) {
                 />
               </div>
             </div>
-
           </div>
           <button onClick={handleFormSubmit} disabled={!Object.values(policies).every((value) => value)}>
             Chấp nhận
           </button>
           <button onClick={onClose}>Cancel</button>
         </div>
-
       </div>
-
     </>
   );
 }

@@ -8,10 +8,10 @@ import axios from 'axios';
 import host from '@/pages/api/host';
 
 export default function SettingProfile() {
-  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState<string | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [showModal, setShowModal] = useState(false);
 
@@ -28,16 +28,48 @@ export default function SettingProfile() {
         const { data } = response;
         setFirstName(data.firstName);
         setLastName(data.lastName);
-        setPhoneNumber(data.phoneNumber);
+        setPhone(data.phone);
         setAddress(data.address);
-        // Assuming avatar object has 'url', 'width', and 'height' properties in the response
         setAvatar(data.avt.url);
       })
       .catch(error => {
-        // Handle the error if needed
         console.log(error);
       });
   }, []);
+
+  const handleUploadAvatar = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios({
+      method: 'PATCH',
+      url: `${host}/user/avatar`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    })
+      .then(response => {
+        const { data } = response;
+        setAvatar(data.url);
+        console.log(123123);
+        location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    console.log(file);
+    if (file) {
+      handleUploadAvatar(file);
+    }
+  };
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -53,34 +85,30 @@ export default function SettingProfile() {
     // Enable the necessary functionality for becoming an Instructor
   };
 
-  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target?.files?.[0];
-    if (file) {
-      setAvatar(file);
-    }
-  };
-
   const handleSaveChanges = () => {
-    const formData = new FormData();
-    formData.append('file', avatar || '');
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      address: address,
+    };
 
     const accessToken = localStorage.getItem('accessToken');
 
     axios({
-      method: 'PATCH',
-      url: `${host}/user/avatar`,
-      data: formData,
+      method: 'PUT',
+      url: `${host}/user`,
+      data: data,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
       }
     })
       .then(response => {
-        // Handle the response if needed
         console.log(response);
+        location.reload();
       })
       .catch(error => {
-        // Handle the error if needed
         console.log(error);
       });
   };
@@ -90,13 +118,12 @@ export default function SettingProfile() {
       <Header />
       <Banner title='Thông tin cá nhân' />
       <div className={Styles.profile_container}>
-        {/* Avatar section */}
         <div className={Styles.avatar_upload}>
           <div className={Styles.avatar_preview}>
             {avatar ? (
-              <img src={URL.createObjectURL(avatar)} alt="Avatar" className={Styles.avatar_image} />
+              <img src={avatar} alt="Avatar" className={Styles.avatar_image} />
             ) : (
-              <img src={avatar || '/default-avatar.png'} alt="User Avatar" className={Styles.avatar_image} />
+              <img src={avatar || '../../images/default-avatar.jpg'} alt="User Avatar" className={Styles.avatar_image} />
             )}
           </div>
           <label htmlFor="avatar" className={Styles.avatar_change}>
@@ -105,13 +132,13 @@ export default function SettingProfile() {
           <input
             type="file"
             id="avatar"
-            accept="image/*"
-            onChange={handleAvatarChange}
+            
             className={Styles.avatar_input}
+            onChange={handleAvatarChange}
+            name="avatar"
           />
         </div>
 
-        {/* Profile fields */}
         <div className={Styles.profile_field}>
           <div className={Styles.name_fields}>
             <div className={Styles.first_name_field}>
@@ -136,22 +163,19 @@ export default function SettingProfile() {
         </div>
         <div className={Styles.profile_field}>
           <label htmlFor="number">Phone:</label>
-          <input type="text" id={Styles.website} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          <input type="text" id={Styles.website} value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
         <div className={Styles.profile_field}>
           <label htmlFor="text">Address:</label>
           <input type="text" id={Styles.website} value={address} onChange={(e) => setAddress(e.target.value)} />
         </div>
 
-        {/* Save Changes button */}
         <button onClick={handleSaveChanges} className={Styles.save_button}>
           Lưu thay đổi
         </button>
 
-        {/* Nâng thành Instructor button */}
         <button onClick={handleModalOpen}>Nâng thành Instructor</button>
 
-        {/* Modal Policy component */}
         {showModal && <ModalPolicy onClose={handleModalClose} onAgree={handleAgree} />}
       </div>
       <Footer />

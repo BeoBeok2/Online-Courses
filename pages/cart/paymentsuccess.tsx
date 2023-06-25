@@ -3,9 +3,26 @@ import Styles from '@/styles/checkout.module.css';
 import Header from '../components/footerheader/header';
 import Footer from '../components/footerheader/footer';
 import Banner from '../components/footerheader/banner';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 export default function PaymentSuccess () {
+    const router = useRouter()
+    useEffect(() => {
+        const asPath:string = router.asPath
+        const token = asPath.slice(asPath.search('token') + 6, asPath.search('&'))
+        const payerId = asPath.slice(asPath.search('PayerID') + 8)
+        
+        axios.post(`http://localhost:3000/payment/capture?orderId=${token}&token=${localStorage.getItem('tokenPayment')}`, {}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(result => {
+            console.log('Success!')
+        }).catch(err => console.log(err))
+    }, [])
     return (
         <>
             

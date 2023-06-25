@@ -21,7 +21,7 @@ export default function Header() {
     const handleLogout = () => {
         // Xóa accessToken và user khỏi localStorage
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('accessToken');
         localStorage.removeItem('user');
       
         // Đặt trạng thái đăng nhập thành false
@@ -71,6 +71,7 @@ export default function Header() {
                                         <div className={Styles.menu}>
                                             <a href="http://localhost:8080/user/profile">Thông tin cá nhân</a>
                                             <a href="http://localhost:8080/instructor">Instructor</a>
+                                            <a href="http://localhost:8080/cart">Cart</a>
                                             <a href="" onClick={handleLogout}>Logout</a>
                                         </div>
                                     </div>

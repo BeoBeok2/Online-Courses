@@ -1,10 +1,12 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import axios from 'axios';
 import Styles from '@/styles/profile.module.css';
 import Header from '../components/footerheader/header';
 import Banner from '../components/footerheader/banner';
 import Footer from '../components/footerheader/footer';
 import SideNav from '../components/instructor/sidenav';
 import { FaCog, FaUser } from 'react-icons/fa';
+import host from '../api/host';
 
 export default function ProfilePage() {
   const [avatar, setAvatar] = useState<File | null>(null);
@@ -18,6 +20,8 @@ export default function ProfilePage() {
   const [bio, setBio] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0];
@@ -38,29 +42,73 @@ export default function ProfilePage() {
       youtube
     });
   };
+  
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
   const handleLogout = () => {
-    // setUserEmail('');
     setLoggedIn(false);
   };
+  function callRefreshToken() {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      axios({
+        method: 'GET',
+        url: `${host}/auth/token`,
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      })
+        .then((response) => {
+          const accessToken = response.data.accessToken;
+          localStorage.setItem('accessToken', accessToken);
+        })
+        .catch((error) => {
+          console.error('Lỗi khi làm mới AccessToken:', error);
+        });
+    } else {
+      console.error('Không tìm thấy refreshToken');
+    }
+  }
+  
+  useEffect(() => {
+    callRefreshToken();
+  }, []);
+  // const refreshToken = async () => {
+
+  //   try {
+  //     const refreshToken = localStorage.getItem('refreshToken');
+  //     const response = await axios.get(`${$host}/auth/token`, {
+  //       headers: {
+  //         Authorization: `Bearer ${refreshToken}`
+  //       }
+  //     });
+  //     const { accessToken } = response.data;
+
+  //     localStorage.setItem('accessToken', accessToken);
+  //   } catch (error) {
+  //     console.error('Lỗi khi làm mới AccessToken:', error);
+  //   }
+  // };
+
   return (
     <>
       {/* <Header/>
     <Banner title='Profile' /> */}
       <div>
-
         <SideNav />
         <div className={Styles.settingsMenu}>
-          <h1 className={Styles.title_settingsMenu}>Hồ sơ
+          <h1 className={Styles.title_settingsMenu}>
+            Hồ sơ
             <a href="#" className={Styles.icon_settingsMenu} onClick={toggleMenu}>
               <FaCog />
               {showMenu && (
                 <div className={Styles.menu}>
                   {/* Các mục trong menu */}
                   <ul>
-                    <li><a href="http://localhost:8080/user/profile">Học viên</a></li>
+                    <li>
+                      <a href="http://localhost:8080/user/profile">Học viên</a>
+                    </li>
                     <li>Menu Item 2</li>
                     <li>
                       <a
@@ -78,7 +126,6 @@ export default function ProfilePage() {
           </h1>
         </div>
         <div className={Styles.profile_container}>
-
           <div className={Styles.avatar_upload}>
             <div className={Styles.avatar_preview}>
               {avatar ? (
@@ -101,20 +148,12 @@ export default function ProfilePage() {
                 <input type="text" id={Styles.last_name} value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
             </div>
-            {/* <div className={Styles.right_content}>
-              <div className={Styles.right_text}>
-                <p>Đây là một đoạn văn bản bên phải</p>
-                <p>Đây là đoạn văn bản khác</p>
-                <p>Thêm nhiều đoạn văn bản khác</p>
-              </div>
-            </div> */}
           </div>
 
           <div className={Styles.profile_field}>
             <label htmlFor="title">Đầu đề:</label>
             <input type="text" id={Styles.title} value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
-          
 
           <div className={Styles.profile_field}>
             <label htmlFor="language">Ngôn ngữ:</label>
@@ -124,73 +163,68 @@ export default function ProfilePage() {
             </select>
           </div>
           <div className={Styles.profile_field}>
-          <label htmlFor="website">Trang web:</label>
-          <input type="text" id={Styles.website} value={website} onChange={(e) => setWebsite(e.target.value)} />
-        </div>
-
-        <div className={Styles.profile_field}>
-          <label htmlFor="linkedin">LinkedIn:</label>
-          <div className={Styles.input_with_addons}>
-            <input
-              type="text"
-              value="https://linkedin.com/"
-              disabled
-              className={Styles.link_prefix}
-            />
-            <input
-              type="text"
-              id={Styles.linkedin}
-              value={linkedin}
-              onChange={(e) => setLinkedIn(e.target.value)}
-            />
+            <label htmlFor="website">Trang web:</label>
+            <input type="text" id={Styles.website} value={website} onChange={(e) => setWebsite(e.target.value)} />
           </div>
-        </div>
 
-        
-
-        <div className={Styles.profile_field}>
-          <label htmlFor="youtube">YouTube:</label>
-          <div className={Styles.input_with_addons}>
-            <input
-              type="text"
-              value="https://youtube.com/"
-              disabled
-              className={Styles.link_prefix}
-            />
-            <input
-              type="text"
-              id={Styles.youtube}
-              value={youtube}
-              onChange={(e) => setYoutube(e.target.value)}
-            />
+          <div className={Styles.profile_field}>
+            <label htmlFor="linkedin">LinkedIn:</label>
+            <div className={Styles.input_with_addons}>
+              <input
+                type="text"
+                value="https://linkedin.com/"
+                disabled
+                className={Styles.link_prefix}
+              />
+              <input
+                type="text"
+                id={Styles.linkedin}
+                value={linkedin}
+                onChange={(e) => setLinkedIn(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className={Styles.profile_field}>
-          <label htmlFor="bio">Bio:</label>
-          <div className={Styles.input_with_addons}>
-            <input
-              type="text"
-              value="https://bio.com/"
-              disabled
-              className={Styles.link_prefix}
-            />
-            <input
-              type="text"
-              id={Styles.bio}
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-            />
+          <div className={Styles.profile_field}>
+            <label htmlFor="youtube">YouTube:</label>
+            <div className={Styles.input_with_addons}>
+              <input
+                type="text"
+                value="https://youtube.com/"
+                disabled
+                className={Styles.link_prefix}
+              />
+              <input
+                type="text"
+                id={Styles.youtube}
+                value={youtube}
+                onChange={(e) => setYoutube(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
 
+          <div className={Styles.profile_field}>
+            <label htmlFor="bio">Bio:</label>
+            <div className={Styles.input_with_addons}>
+              <input
+                type="text"
+                value="https://bio.com/"
+                disabled
+                className={Styles.link_prefix}
+              />
+              <input
+                type="text"
+                id={Styles.bio}
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </div>
+          </div>
 
           <button onClick={handleSaveChanges} className={Styles.save_button}>Lưu thay đổi</button>
         </div>
       </div>
       {/* <Footer/> */}
     </>
-
   );
 }
-

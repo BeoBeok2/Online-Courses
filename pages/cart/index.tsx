@@ -3,9 +3,70 @@ import Styles from '@/styles/cart.module.css';
 import Header from '../components/footerheader/header';
 import Footer from '../components/footerheader/footer';
 import Banner from '../components/footerheader/banner';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 export default function Cart () {
+    const [dataCart, setDataCart] = useState({
+        id: '',
+        cart: {
+            id: '',
+            courses: [],
+            totalPrice: '',
+        },
+        totalCourse: '',
+    })
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDeleteCourseInCart = (e: any) => {
+        e.preventDefault()
+        const indexCourseCart = e.target.dataset.indexCourseCart
+        const course:any = dataCart.cart.courses[indexCourseCart]
+        console.log(course);
+
+        axios.delete('http://localhost:3000/cart', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            data: {
+                "cartId":`${dataCart.cart.id}`, 
+                "courseId": `${course.id}`
+            }
+        }).then(result => {
+            getData()
+        }).catch(err => console.log(err))
+    }
+
+    const getData = () => {
+        axios.get('http://localhost:3000/cart', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(result => {
+            console.log(result)
+            setDataCart(result.data)
+        })
+    }
+
+    const handlePayment = (e:any) => {
+        e.preventDefault()
+        axios.post('http://localhost:3000/payment', { "cartId":`${dataCart.cart.id}` }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(result => {
+            const data = result.data
+            localStorage.setItem('tokenPayment', data.orderToken.token)
+
+            window.location.href = data.links.href
+        })
+    }
+
+
     return (
         <>
             <Head>
@@ -26,44 +87,50 @@ export default function Cart () {
                                         <li className={Styles.product_item} id={Styles.product_thumnail}>PRODUCT</li>
                                         <li className={Styles.product_item} id={Styles.product_name}></li>
                                         <li className={Styles.product_item} id={Styles.product_price}>PRICE</li>
-                                        <li className={Styles.product_item} id={Styles.product_quality}>QUALITY</li>
-                                        <li className={Styles.product_item} id={Styles.product_subtotal}>TOTAL</li>    
+                                        {/* <li className={Styles.product_item} id={Styles.product_quality}>QUALITY</li> */}
+                                        {/* <li className={Styles.product_item} id={Styles.product_subtotal}>TOTAL</li>     */}
                                         <li className={Styles.product_item} id={Styles.product_remove}></li>
                                     </ul>
                                 </div>
                                 <div className={Styles.shop_table_body}>
-                                    <ul className={Styles.product_list}>
-                                        <li className={Styles.product_item_body} id={Styles.product_thumnail}>
-                                            <a href="#">
-                                                <img src="../../images/course-1.jpg" className={Styles.size_woocommerce_thumbnail} alt="" decoding="async" loading="lazy"/>
-                                            </a>
-                                        </li>
-                                        <li className={Styles.product_item_body} id={Styles.product_name}>
-                                            <a href="#">
-                                                <span>Tìm hiểu về C#</span>
-                                            </a>
-                                        </li>
-                                        <li className={Styles.product_item_body} id={Styles.product_price}>
-                                            <span>10$</span>
-                                        </li>
-                                        <li className={Styles.product_item_body} id={Styles.product_quality}>
-                                            <span>1</span>
-                                        </li>
-                                        <li className={Styles.product_item_body} id={Styles.product_subtotal}>
-                                            <span>10$</span>
-                                        </li>    
-                                        <li className={Styles.product_item_body} id={Styles.product_remove}>
-                                            <div className={Styles.product_remove_icon}>
-                                                <a href="#">
-                                                    <i className="fa-solid fa-x"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                        {
+                                            dataCart?.cart.courses && dataCart?.cart.courses.map((course : any, index : Number) => (
+                                                <>
+                                                <ul className={Styles.product_list}>
+                                                    <li className={Styles.product_item_body} id={Styles.product_thumnail} key={`cart-${course.id}`}>
+                                                        <a href="#">
+                                                            <img src={`${course?.thumbnail?.url}`} className={Styles.size_woocommerce_thumbnail} alt="" decoding="async" loading="lazy"/>
+                                                        </a>
+                                                    </li>
+                                                    <li className={Styles.product_item_body} id={Styles.product_name}>
+                                                        <a href="#">
+                                                            <span>{course.title}</span>
+                                                        </a>
+                                                    </li>
+                                                    <li className={Styles.product_item_body} id={Styles.product_price}>
+                                                        <span>{course.price}</span>
+                                                    </li>
+                                                    {/* <li className={Styles.product_item_body} id={Styles.product_quality}>
+                                                        <span>1</span>
+                                                    </li> */}
+                                                    {/* <li className={Styles.product_item_body} id={Styles.product_subtotal}>
+                                                        <span>10$</span>
+                                                    </li>  */}
+                                                    <li className={Styles.product_item_body} id={Styles.product_remove}>
+                                                        <div className={Styles.product_remove_icon}>
+                                                            <a href="" onClick={handleDeleteCourseInCart} data-index-course-cart={index}>
+                                                                <i className="fa-solid fa-x"></i>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                </>
+                                            ))
+                                        }
                                 </div>
                             </div>
                         </div>
-                        <div className={Styles.woocommerce_btn}>
+                        {/* <div className={Styles.woocommerce_btn}>
                             <button id={Styles.button} role="button">UPDATE CART</button>
                         </div>
                         <div className={Styles.woocommerce_cart_coupon}>
@@ -77,7 +144,7 @@ export default function Cart () {
                                     <button className={Styles.woocommerce_btn} id={Styles.button}  role="button">UPDATE CART</button>
                                 </div>
                             </div>
-                        </div>   
+                        </div>    */}
                     </div>
                     <div className={Styles.cart_collaterals}>
                         <div className={Styles.cart_totals}>
@@ -89,7 +156,11 @@ export default function Cart () {
                                         <span>Subtotal</span>
                                     </li>
                                     <li className={Styles.car_sub_text}>
-                                        <span>	₹36.00</span>
+                                        {
+                                            dataCart?.cart?.courses && dataCart?.cart?.courses.map((course:any, index) => (<>
+                                                <span>{`${course.price} ${course.currency}`}</span><br/>
+                                            </>))
+                                        }
                                     </li>
                                     <span></span>
                                 </ul>
@@ -99,14 +170,14 @@ export default function Cart () {
                                         <span>Total</span>
                                     </li>
                                     <li className={Styles.car_sub_text}>
-                                        <span>	₹36.00</span>
+                                        <span>{`${dataCart.cart.totalPrice}`}</span>
                                     </li>
                                     <span></span>
                                 </ul>
                             </div>
                         </div>
                         <div className={Styles.btn_cart_checkout} >
-                        <a href="http://localhost:8080/courses/cart/checkout" className={Styles.cart_checkout_btn}  role="button">PROCEED TO CHECKOUT</a>
+                        <a href="" onClick={handlePayment} className={Styles.cart_checkout_btn}  role="button">PROCEED TO CHECKOUT</a>
                         </div>
                     </div>
                 </div>

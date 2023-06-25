@@ -17,7 +17,7 @@ export default function Register() {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const [username, setUserName] = useState('');
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstname, setFirstName] = useState('');
@@ -50,7 +50,7 @@ export default function Register() {
                 setIsLoading(false);
                 setEmail('');
                 setPassword('');
-                setUserName('');
+                
                 setFirstName('');
                 setLastName('');
                 setPhoneNumber('');
@@ -91,8 +91,7 @@ export default function Register() {
                             <div className={Styles.layoutwrap}>
                                 <div className={Styles.account}>
                                     <h2 className={Styles.h2}>Account Details</h2>
-                                    <label htmlFor="signup_username">Username (required)</label>
-                                    <input type="text" name='signup_username' id='signup_username' value={username} onChange={(e) => setUserName(e.target.value)} required />
+                                    
                                     <label htmlFor="signup_email">Email Address (required)</label>
                                     <input type="email" name='signup_email' id='signup_email' value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     <label htmlFor="pass1">Choose a Password (required)</label>

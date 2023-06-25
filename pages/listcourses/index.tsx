@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import host from '../api/host';
+import { data } from 'autoprefixer';
+import { access } from 'fs';
 
 interface Course {
     id: string;
@@ -32,7 +34,7 @@ interface Course {
 
 export default function ListCourses() {
     const [courses, setCourses] = useState<Course[]>([]);
-    const [currentpage, setCurrentPage] = useState(1);
+    const [currentpage, setCurrentPage] = useState(2);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
     const { query } = router;
@@ -41,7 +43,7 @@ export default function ListCourses() {
     let isMounted = true;
 
     if (typeof window !== 'undefined') {
-        accessToken = sessionStorage.getItem('accessToken');
+        accessToken = localStorage.getItem('accessToken');
     }
 
     function truncateDescription(description: string, maxLength: number) {
@@ -99,6 +101,20 @@ export default function ListCourses() {
 
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
+    const handleAddToCart = (e: any) => {
+        const indexCourse = e.target.dataset.indexCourse
+        const course = courses[indexCourse]
+        axios.post('http://localhost:3000/cart', {
+            "courseId": `${course.id}`
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(result => {
+            console.log(result)            
+        }).catch(err => console.log(err))
+    }
+
     return (
         <>
             <Header />
@@ -106,7 +122,7 @@ export default function ListCourses() {
             <div className={Styles.main_courses}>
                 <div className={Styles.list_courses_container}>
                     <div className={Styles.list_courses_items}>
-                        {courses.map(course => (
+                        {courses.map((course, index) => (
                             <div className={Styles.courseslist_wrapper_item} key={course.id}>
                                 <div className={Styles.courseslist_image}>
                                     <a
@@ -170,7 +186,7 @@ export default function ListCourses() {
                                             </div>
                                         </div>
                                         
-                                        <div className={Styles.btn}>Add to Cart</div>
+                                        <div data-index-course={index} onClick={handleAddToCart} className={Styles.btn}>Add to Cart</div>
                                     </div>
                                 </div>
                             </div>
