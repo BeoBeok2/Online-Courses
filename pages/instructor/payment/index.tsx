@@ -4,7 +4,7 @@ import Styles from '@/styles/payment.module.css';
 import SideNav from '@/pages/components/instructor/sidenav';
 import PayPalButton from '@/pages/components/instructor/PayPalButton';
 export default function Payment() {
-
+ 
 
 
     return (

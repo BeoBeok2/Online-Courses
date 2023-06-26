@@ -65,7 +65,10 @@ export default function Header() {
                             
                             </li>
                           
-                          
+                            <li>
+                                <a href="http://localhost:8080/mylearning">My learning</a>
+
+                                </li> 
                             <li>
                                 <a href="http://localhost:8080/listcourses">Courses</a>
                             </li>
@@ -92,6 +95,8 @@ export default function Header() {
                                             <a href="http://localhost:8080/user/profile">Thông tin cá nhân</a>
                                             <a href="http://localhost:8080/instructor">Instructor</a>
                                             <a href="http://localhost:8080/cart">Cart</a>
+                                            <a href="http://localhost:8080/transaction">Transaction</a>
+
                                             <a href="" onClick={handleLogout}>Logout</a>
                                         </div>
                                     </div>

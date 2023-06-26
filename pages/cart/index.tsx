@@ -22,11 +22,8 @@ export default function Cart () {
         getData()
     }, [])
 
-    const handleDeleteCourseInCart = (e: any) => {
-        e.preventDefault()
-        const indexCourseCart = e.target.dataset.indexCourseCart
-        const course:any = dataCart.cart.courses[indexCourseCart]
-        console.log(course);
+    const handleDeleteCourseInCart = (e:any, courseId: any) => {
+        console.log(courseId)
 
         axios.delete('http://localhost:3000/cart', {
             headers: {
@@ -34,7 +31,7 @@ export default function Cart () {
             },
             data: {
                 "cartId":`${dataCart.cart.id}`, 
-                "courseId": `${course.id}`
+                "courseId": courseId
             }
         }).then(result => {
             getData()
@@ -118,7 +115,7 @@ export default function Cart () {
                                                     </li>  */}
                                                     <li className={Styles.product_item_body} id={Styles.product_remove}>
                                                         <div className={Styles.product_remove_icon}>
-                                                            <a href="" onClick={handleDeleteCourseInCart} data-index-course-cart={index}>
+                                                            <a href="#" onClick={() => handleDeleteCourseInCart(Event, course.id)} data-index-course-cart={index}>
                                                                 <i className="fa-solid fa-x"></i>
                                                             </a>
                                                         </div>

@@ -19,13 +19,18 @@ const SideNav = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      <a href="http://localhost:8080/">
+
       <button className={Styles.toggleButton}>
+
         <img
           className={`${Styles.logo} ${isSideNavOpen ? Styles.logoHover : ''}`}
           src={isSideNavOpen ? "../../../images/logo1.png" : "../../../favicon.ico"}
           alt=""
         />
       </button>
+      </a>
+
       <ul className={Styles.navList}>
         <li className={Styles.navItem}>
           <a href="http://localhost:8080/instructor">Profile</a>
