@@ -9,11 +9,11 @@ import { FaCog, FaUser } from 'react-icons/fa';
 import host from '../api/host';
 
 export default function ProfilePage() {
-  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatar, setAvatar] = useState<string | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [title, setTitle] = useState('');
-  const [language, setLanguage] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const [website, setWebsite] = useState('');
   const [linkedin, setLinkedIn] = useState('');
   const [youtube, setYoutube] = useState('');
@@ -21,28 +21,56 @@ export default function ProfilePage() {
   const [showMenu, setShowMenu] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  
 
-  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target?.files?.[0];
+
+  const handleUploadAvatar = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios({
+      method: 'PATCH',
+      url: `${host}/user/avatar`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    })
+      .then(response => {
+        const { data } = response;
+        setAvatar(data.url);
+        console.log(123123);
+        location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    console.log(file);
     if (file) {
-      setAvatar(file);
+      handleUploadAvatar(file);
     }
   };
 
-  const handleSaveChanges = () => {
-    console.log('Dữ liệu đã được lưu:', {
-      avatar,
-      firstName,
-      lastName,
-      title,
-      bio,
-      language,
-      website,
-      youtube
-    });
-  };
-  
+  // const handleSaveChanges = () => {
+  //   console.log('Dữ liệu đã được lưu:', {
+  //     avatar,
+  //     firstName,
+  //     lastName,
+  //     phone,
+  //     address,
+  //     website,
+  //     linkedin,
+  //     youtube,
+  //     bio
+  //   });
+  // };
+
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -70,10 +98,51 @@ export default function ProfilePage() {
       console.error('Không tìm thấy refreshToken');
     }
   }
-  
+
   useEffect(() => {
     callRefreshToken();
   }, []);
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    axios({
+      method: 'GET',
+      url: `${host}/user/profile`,
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      }
+    })
+      .then(response => {
+        const { data } = response;
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setPhone(data.phoneNumber);
+        setAddress(data.address);
+        setAvatar(data.avt.url);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios({
+      method: 'GET',
+      url: `${host}/instructor/profile`,
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      }
+    })
+      .then(response => {
+        const { data } = response;
+        setWebsite(data.website);
+        setLinkedIn(data.linkedin.split('.com/')[1]);
+        setYoutube(data.youtube.split('.com/')[1]);
+        setBio(data.bio.split('.com/')[1]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+
   // const refreshToken = async () => {
 
   //   try {
@@ -90,6 +159,72 @@ export default function ProfilePage() {
   //     console.error('Lỗi khi làm mới AccessToken:', error);
   //   }
   // };
+  // const handleSaveChanges = () => {
+  //   const updateUserData = {
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     phoneNumber: phone,
+  //     address: address,
+  //   };
+
+  //   const instructorData = {
+  //     Website: website,
+  //     Linkedin: `https://linkedin.com/${linkedin}`,
+  //     Youtube: `https://youtube.com/${youtube}`,
+  //     Bio: `https://bio.com/${bio}`,
+  //   };
+
+  //   const accessToken = localStorage.getItem('accessToken');
+
+  //   axios.all([
+  //     axios.put(`${host}/user`, updateUserData, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${accessToken}`,
+  //       }
+  //     }),
+  //     axios.post(`${host}/instructor`, instructorData, {
+  //       headers: {
+  //         'Authorization': `Bearer ${accessToken}`,
+  //       }
+  //     })
+  //   ])
+  //     .then(axios.spread((userResponse, instructorResponse) => {
+  //       console.log(userResponse);
+  //       console.log(instructorResponse);
+  //       location.reload();
+  //     }))
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
+  const handleSaveChanges = () => {
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phone,
+      address: address,
+    };
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    axios({
+      method: 'PUT',
+      url: `${host}/user`,
+      data: data,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      }
+    })
+      .then(response => {
+        console.log(response);
+        location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -100,38 +235,29 @@ export default function ProfilePage() {
         <div className={Styles.settingsMenu}>
           <h1 className={Styles.title_settingsMenu}>
             Hồ sơ
-            <a href="#" className={Styles.icon_settingsMenu} onClick={toggleMenu}>
-              <FaCog />
-              {showMenu && (
-                <div className={Styles.menu}>
-                  {/* Các mục trong menu */}
-                  <ul>
-                    <li>
-                      <a href="http://localhost:8080/user/profile">Học viên</a>
-                    </li>
-                    <li>Menu Item 2</li>
-                    <li>
-                      <a
-                        className="fa fa-user-times"
-                        href="/logout"
-                        onClick={handleLogout}
-                      >
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+            <div className={Styles.avatar_container}>
+              {avatar ? (
+                <img src={avatar} alt="Avatar" className={Styles.avatar} />
+              ) : (
+                <img src={avatar || '../../images/default-avatar.jpg'} alt="User Avatar" className={Styles.avatar} />
               )}
-            </a>
+
+              <div className={Styles.menu}>
+                <a href="http://localhost:8080/user/profile">Thông tin cá nhân</a>
+                <a href="http://localhost:8080/instructor">Instructor</a>
+                <a href="http://localhost:8080/cart">Cart</a>
+                <a href="" onClick={handleLogout}>Logout</a>
+              </div>
+            </div>
           </h1>
         </div>
         <div className={Styles.profile_container}>
           <div className={Styles.avatar_upload}>
             <div className={Styles.avatar_preview}>
               {avatar ? (
-                <img src={URL.createObjectURL(avatar)} alt="Avatar" className={Styles.avatar_image} />
+                <img src={avatar} alt="Avatar" className={Styles.avatar_image} />
               ) : (
-                <img src="/default-avatar.png" alt="Default Avatar" className={Styles.avatar_image} />
+                <img src={avatar || '../../images/default-avatar.jpg'} alt="User Avatar" className={Styles.avatar_image} />
               )}
             </div>
             <label htmlFor="avatar" className={Styles.avatar_change}>Chọn ảnh</label>
@@ -151,16 +277,13 @@ export default function ProfilePage() {
           </div>
 
           <div className={Styles.profile_field}>
-            <label htmlFor="title">Đầu đề:</label>
-            <input type="text" id={Styles.title} value={title} onChange={(e) => setTitle(e.target.value)} />
+            <label htmlFor="title">Phone:</label>
+            <input type="number" id={Styles.title} style={{ width: '50%', padding: '10px', border: '1px solid #ccc', appearance: 'none' }} value={phone} onChange={(e) => setPhone(e.target.value)} />
           </div>
 
           <div className={Styles.profile_field}>
-            <label htmlFor="language">Ngôn ngữ:</label>
-            <select id={Styles.language} value={language} onChange={(e) => setLanguage(e.target.value)}>
-              <option value="English">English</option>
-              <option value="Vietnamese">Vietnamese</option>
-            </select>
+            <label htmlFor="language">Địa chỉ:</label>
+            <input type="text" id={Styles.title} value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
           <div className={Styles.profile_field}>
             <label htmlFor="website">Trang web:</label>
