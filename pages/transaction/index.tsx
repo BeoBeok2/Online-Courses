@@ -20,8 +20,26 @@ interface Payment {
   ]
 }
 const Transaction = () => {
+
   const [transaction, setTransaction] =  useState<Payment | null>(null);
-  
+  const refund = (paymentId:any) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+    axios({
+      method: 'POST',
+      url: `${host}/payment/refund?pm=${paymentId}`,
+      headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  .then(res => {
+    console.log(res)
+    router.push('http://localhost:8080/transaction');
+
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
+  }
   
   useEffect(() => {
     const  callAPI = async () => {
@@ -59,12 +77,12 @@ const Transaction = () => {
       {
         transaction?.payment.map((t, index) => {
           return (
-            <tr key={index}>
+            <tr style={{lineHeight: "30px"}} key={index}>
               <th  style={{textAlign: "left", width: "20%"}} scope="row">{t.paymentId}</th>
               <td  style={{textAlign: "left", width: "20%"}} >{t.paymentDate}</td>
               <td  style={{textAlign: "left", width: "20%"}}>{t.total}</td>
               <td  style={{textAlign: "left", width: "20%"}}>VND</td>
-              <td  style={{textAlign: "left", width: "20%"}}>{t.refundStatus}</td>
+             {t.refundStatus == "pendingRefund" ? <button onClick={() => refund(t.paymentId)}>Refund</button> :  <td  style={{textAlign: "left", width: "20%"}}>{t.refundStatus}</td>}
 
            </tr>
           )
