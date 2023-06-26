@@ -133,6 +133,7 @@ const CourseDetail: React.FC = () => {
   const router = useRouter();
   const { id } = router.query;
   function callAPI(id: any) {
+    
     axios({
       method: 'GET',
       url: `${host}/courses/${id}`,

@@ -66,7 +66,7 @@ export default function CourseManagement() {
                     </div>
                 </div>
                 {courses.map((course, index)=>(
-                                      <a href={`http://localhost:8080/instructor/${course.id}/updatecourse`} id={Styles.edit_button} role="button" key={index}>
+                                      <a href={`http://localhost:8080/instructor/${course.id}/editcourse`} id={Styles.edit_button} role="button" key={index}>
 
                               <div className={Styles.course_list} >
                               <div className={`${Styles.course_card} ${Styles.hover_effect}`}>
