@@ -1,8 +1,13 @@
 
 
+.lecture {
+color: black;
+}
+
+.lecture:hover {
+  background-color: #d1d7db;
   
-
-
+}
 
 .main {
     box-sizing: border-box;
@@ -291,7 +296,7 @@
     padding: 30px 0;
     cursor: pointer;
     list-style: none;
-    margin-left: 200px;
+    margin-left: 50px;
   }
   #fa_wordpress {
     background-color: var(--second-color);

@@ -4,7 +4,7 @@ import Footer from '../components/footerheader/footer';
 import Banner from '../components/footerheader/banner';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import host from '../api/host';
 import { data } from 'autoprefixer';
 import { access } from 'fs';
@@ -22,6 +22,7 @@ interface Course {
     };
     NumReviews: string;
     AvgRating: string;
+    IsPublish: boolean;
     thumbnail: {
         url: string;
         width: string;
@@ -60,9 +61,14 @@ export default function ListCourses() {
             headers: { Authorization: `Bearer ${accessToken}` },
         })
             .then(response => {
-                console.log(response.data.courses);
                 if ('courses' in response.data) {
-                    const courses = response.data.courses as Course[];
+                    const courses: SetStateAction<Course[]> = []
+
+                    for(let i = 0; i < response.data.courses.length; i++) {
+                        if(response.data.courses[i].isPublish) {
+                            courses.push(response.data.courses[i])
+                        }
+                    }
                     setCourses(courses);
                 }
             })
@@ -112,7 +118,11 @@ export default function ListCourses() {
             }
         }).then(result => {
             console.log(result)            
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            if(err.response.data.code == 400) {
+                alert(err.response.data.message)
+            }
+        })
     }
 
     return (
@@ -122,75 +132,77 @@ export default function ListCourses() {
             <div className={Styles.main_courses}>
                 <div className={Styles.list_courses_container}>
                     <div className={Styles.list_courses_items}>
-                        {courses.map((course, index) => (
-                            <div className={Styles.courseslist_wrapper_item} key={course.id}>
-                                <div className={Styles.courseslist_image}>
-                                    <a
-                                        href={`http://localhost:8080/listcourses/coursedetail/${course.id}`}
-                                        title={course.title}
-                                    >
-                                        <img
-                                            src={course.thumbnail.url}
-                                            alt={course.title}
-
-                                            className={Styles.courses_image}
-                                            decoding="async"
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                </div>
-                                <div className={Styles.courseslist_details}>
-                                    <div className={Styles.courseslist_details_inner}>
-                                        <div className={Styles.courseslisting_featured}>
-                                            <span className={Styles.courseslisting_featured_text}>{course.level}</span>
-                                        </div>
-                                        <h5>
-                                            <a href={`http://localhost:8080/listcourses/coursedetail/${course.id}`}>
-                                                {course.title}
-                                            </a>
-                                            <div className={Styles.coursesdetails_price}>
-                                            <span className={Styles.price_status}>
-                                                <ins>
-                                                    <span className={Styles.price_amount}>
-                                                        {course.price.value} {course.price.currency}
-                                                        {/* <span className={Styles.price_current_symbol}>$</span> */}
-                                                    </span>
-                                                </ins>
-                                            </span>
-                                        </div>
-                                        </h5>
-                                        <div className={Styles.courseslist_description}>
-                                            {truncateDescription(course.description, 50)}
-                                        </div>
-                                        <div className={Styles.courseslist_metadata_holder}>
-                                            {/* <div className={Styles.courseslist_author_image}>
-                                                <a href="#">
-                                                   <img
-                                                        src={course.imageUrl}
-                                                        alt=""
-                                                        className="avatar"
-                                                        width={150}
-                                                        height={150}
-                                                        loading="lazy"
-                                                        decoding="async"
-                                                    />
+                        {courses.map((course, index) => {
+                                return (
+                                    <div className={Styles.courseslist_wrapper_item} key={course.id}>
+                                    <div className={Styles.courseslist_image}>
+                                        <a
+                                            href={`http://localhost:8080/listcourses/coursedetail/${course.id}`}
+                                            title={course.title}
+                                        >
+                                            <img
+                                                src={course.thumbnail.url}
+                                                alt={course.title}
+    
+                                                className={Styles.courses_image}
+                                                decoding="async"
+                                                loading="lazy"
+                                            />
+                                        </a>
+                                    </div>
+                                    <div className={Styles.courseslist_details}>
+                                        <div className={Styles.courseslist_details_inner}>
+                                            <div className={Styles.courseslisting_featured}>
+                                                <span className={Styles.courseslisting_featured_text}>{course.level}</span>
+                                            </div>
+                                            <h5>
+                                                <a href={`http://localhost:8080/listcourses/coursedetail/${course.id}`}>
+                                                    {course.title}
                                                 </a>
-                                            </div> */}
-                                            {/* <div className={Styles.courseslist_author_description}>
-                                                <p>
-                                                    <a href="#" rel="author">
-                                                        Hoàng Phúc
+                                                <div className={Styles.coursesdetails_price}>
+                                                <span className={Styles.price_status}>
+                                                    <ins>
+                                                        <span className={Styles.price_amount}>
+                                                            {course.price.value} {course.price.currency}
+                                                            {/* <span className={Styles.price_current_symbol}>$</span> */}
+                                                        </span>
+                                                    </ins>
+                                                </span>
+                                            </div>
+                                            </h5>
+                                            <div className={Styles.courseslist_description}>
+                                                {truncateDescription(course.description, 50)}
+                                            </div>
+                                            <div className={Styles.courseslist_metadata_holder}>
+                                                {/* <div className={Styles.courseslist_author_image}>
+                                                    <a href="#">
+                                                       <img
+                                                            src={course.imageUrl}
+                                                            alt=""
+                                                            className="avatar"
+                                                            width={150}
+                                                            height={150}
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                        />
                                                     </a>
-                                                    <span></span>
-                                                </p>
-                                            </div> */}
+                                                </div> */}
+                                                {/* <div className={Styles.courseslist_author_description}>
+                                                    <p>
+                                                        <a href="#" rel="author">
+                                                            Hoàng Phúc
+                                                        </a>
+                                                        <span></span>
+                                                    </p>
+                                                </div> */}
+                                            </div>
+                                            
+                                            <div data-index-course={index} onClick={handleAddToCart} className={Styles.btn}>Add to Cart</div>
                                         </div>
-                                        
-                                        <div data-index-course={index} onClick={handleAddToCart} className={Styles.btn}>Add to Cart</div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                                )
+                        })}
                     </div>
                     <div className={Styles.pagination}>
                         {previousPage && (
@@ -208,13 +220,7 @@ export default function ListCourses() {
                             </button>
                             
                         ))}
-                        <button
-                            className={Styles.page_numbers}
-                            onClick={() => router.push(`/listcourses?page=${2}`)}
-                            disabled={currentpage === 2}
-                        >
-                            2
-                        </button>
+                  
                         
                         {nextPage && (
                             <button onClick={() => router.push(`/listcourses?page=${nextPage}`)}>Next</button>
