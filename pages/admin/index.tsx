@@ -93,12 +93,12 @@ export default function Admin() {
 
   return (
     <>
-      <Head>
+      <header>
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
         />
-      </Head>
+      </header>
       <div className="container mt-5">
         <h1 className="mb-3">Danh sách khóa học</h1>
         <table className="table table-bordered">

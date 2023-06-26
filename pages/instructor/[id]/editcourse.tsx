@@ -167,13 +167,13 @@ const EditCoursePage = () => {
 
   return (
     <>
-      <Head>
-        <link
+      
+        
+      <header><link
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 
-        />
-      </Head>
+        /></header>
       <div className="container">
         <h1>Edit Course</h1>
         <form>

@@ -168,7 +168,7 @@
     border-radius: 5px;
     }
     .img_Content{
-        display: block;
+        display: flex;
         
       }
       .img_Content img{
@@ -207,4 +207,6 @@
     background-color: #00eda4;
     border: 1px solid #00eda4;
   }
-  
+  .fix_footer{
+    display: inline;
+  }

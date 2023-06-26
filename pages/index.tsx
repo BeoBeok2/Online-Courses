@@ -102,9 +102,9 @@ export default function Home() {
       <Slide />
       <CounterSection/>
       <TabsPage/>
-      <div className={Styles.main_courses}>
+       <div className={Styles.main_courses}>
         <div className={Styles.list_courses_container}>
-          <div className={Styles.list_courses_items}>
+          {/*<div className={Styles.list_courses_items}>
             {courses.map(course => (
               <div className={Styles.courseslist_wrapper_item} key={course.id}>
                 <div className={Styles.courseslist_image}>
@@ -202,11 +202,12 @@ export default function Home() {
                 </a>
               )}
             </div>
-          </div>
+              </div>*/}
         </div>
-      </div>
-      
+      </div> 
+      <div className={Styles.fix_footer}>
       <Footer />
+      </div>
     </>
   );
 }

@@ -49,7 +49,7 @@ const Slider = () => {
             <h2>Live Courses</h2>
             <h2>Certified Lessons</h2>
             <div className={Styles.btn_listcourses}>
-              <a href="http://localhost:8080/courses/courses/listcourses" className={Styles.listcourses_btn} role="button">
+              <a href="http://localhost:8080/listcourses" className={Styles.listcourses_btn} role="button">
                 <i className="fas fa-eye"></i> View Courses
               </a>
             </div>

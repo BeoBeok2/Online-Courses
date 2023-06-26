@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Styles from '@/styles/addlesson.module.css';
 import VideoUpload from '@/pages/components/instructor/uploadvideo';
 
-import { CircularProgress } from '@material-ui/core';
-
 const CreateCoursePage = () => {
   const [lessonsData, setLessonsData] = useState<{ questions: { question: string; answer: string }[] }[]>([]);
 
@@ -37,6 +35,7 @@ const CreateCoursePage = () => {
     event.preventDefault();
     console.log(lessonsData);
   };
+
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -47,16 +46,17 @@ const CreateCoursePage = () => {
 
       <div className={Styles.form_container}>
         <form onSubmit={displayLessonsData}>
-
           <div id="lessons">
             {lessonsData.map((lesson, lessonIndex) => (
               <div key={lessonIndex} className={Styles.lesson_input}>
-                <label htmlFor={`lessonTitle${lessonIndex}`} className={Styles.label_add_lesson}>Tiêu đề bài học:</label>
+                <label htmlFor={`lessonTitle${lessonIndex}`} className={Styles.label_add_lesson}>
+                  Tiêu đề bài học:
+                </label>
                 <input type="text" id={`lessonTitle${lessonIndex}`} name="lessonTitle[]" required />
 
                 <VideoUpload lessonIndex={lessonIndex} />
-                
-                {/* <div id={`quizzes${lessonIndex}`}>
+
+                <div id={`quizzes${lessonIndex}`}>
                   <button
                     type="button"
                     className={Styles.add_quiz_button}
@@ -109,13 +109,19 @@ const CreateCoursePage = () => {
                         Xóa câu hỏi
                       </button>
                     </div>
-                    
                   ))}
-                
-                </div> */}
-                <hr  className={Styles.line_lesson}/>
+                </div>
+                <hr className={Styles.line_lesson} />
+
+                <button
+                  type="button"
+                  className={Styles.remove_lesson_button}
+                  onClick={() => removeLesson(lessonIndex)}
+                  id={Styles.button}
+                >
+                  Xóa bài học
+                </button>
               </div>
-              
             ))}
           </div>
 
@@ -125,7 +131,7 @@ const CreateCoursePage = () => {
 
           <br />
 
-          <input type="submit" className={Styles.submit_button} value="Save"  id={Styles.button}/>
+          <input type="submit" className={Styles.submit_button} value="Save" id={Styles.button} />
         </form>
       </div>
     </div>
